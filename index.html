@@ -9,64 +9,59 @@
 <link rel="apple-touch-icon" href="icon.png">
 <title>Timetable</title>
 <style>
+/* ── CSS変数（:rootを1つに統一） ── */
 :root{
-  --sab:env(safe-area-inset-bottom, 0px);
-}
+  --bg:#fafafa;--sur:#fff;--sur2:#f0f0f0;--brd:#e0e0e0;
   --acc:#222;--acc2:#555;--txt:#111;--mut:#888;
   --red:#e53935;--grn:#43a047;--yel:#f9a825;--ora:#fb923c;
 }
 .th-minimal{--bg:#fafafa;--sur:#fff;--sur2:#f0f0f0;--brd:#e0e0e0;--acc:#222;--acc2:#555;--txt:#111;--mut:#888}
-.th-white{--bg:#fff;--sur:#f7f8fa;--sur2:#eef0f3;--brd:#dde1e7;--acc:#5865f2;--acc2:#2ecc71;--txt:#1a1c1e;--mut:#7a8290}
-.th-cream{--bg:#fdfaf5;--sur:#fff8ee;--sur2:#f3ecdf;--brd:#e6ddd0;--acc:#c07c3a;--acc2:#7ab648;--txt:#2d2318;--mut:#9a8878}
-.th-cool{--bg:#f5f7fb;--sur:#fff;--sur2:#eaf0fa;--brd:#d0d9ea;--acc:#2563eb;--acc2:#0ea5e9;--txt:#0f1c36;--mut:#6b7a99}
-.th-light{--bg:#f2f3f5;--sur:#fff;--sur2:#e3e5e8;--brd:#c4c9d0;--acc:#5865f2;--acc2:#1a8a4a;--txt:#2e3338;--mut:#696f7a}
-.th-dark{--bg:#313338;--sur:#2b2d31;--sur2:#1e1f22;--brd:#1e1f22;--acc:#5865f2;--acc2:#57f287;--txt:#dbdee1;--mut:#949ba4}
-.th-darker{--bg:#1e1f22;--sur:#2b2d31;--sur2:#313338;--brd:#111214;--acc:#5865f2;--acc2:#00b0f4;--txt:#dbdee1;--mut:#80848e}
+.th-white  {--bg:#fff;--sur:#f7f8fa;--sur2:#eef0f3;--brd:#dde1e7;--acc:#5865f2;--acc2:#2ecc71;--txt:#1a1c1e;--mut:#7a8290}
+.th-cream  {--bg:#fdfaf5;--sur:#fff8ee;--sur2:#f3ecdf;--brd:#e6ddd0;--acc:#c07c3a;--acc2:#7ab648;--txt:#2d2318;--mut:#9a8878}
+.th-cool   {--bg:#f5f7fb;--sur:#fff;--sur2:#eaf0fa;--brd:#d0d9ea;--acc:#2563eb;--acc2:#0ea5e9;--txt:#0f1c36;--mut:#6b7a99}
+.th-light  {--bg:#f2f3f5;--sur:#fff;--sur2:#e3e5e8;--brd:#c4c9d0;--acc:#5865f2;--acc2:#1a8a4a;--txt:#2e3338;--mut:#696f7a}
+.th-dark   {--bg:#313338;--sur:#2b2d31;--sur2:#1e1f22;--brd:#1e1f22;--acc:#5865f2;--acc2:#57f287;--txt:#dbdee1;--mut:#949ba4}
+.th-darker {--bg:#1e1f22;--sur:#2b2d31;--sur2:#313338;--brd:#111214;--acc:#5865f2;--acc2:#00b0f4;--txt:#dbdee1;--mut:#80848e}
 .th-midnight{--bg:#0d0d0f;--sur:#1a1a1e;--sur2:#111114;--brd:#2a2a2f;--acc:#5865f2;--acc2:#eb459e;--txt:#dbdee1;--mut:#7a7e86}
 .th-classic{--bg:#23272a;--sur:#2c2f33;--sur2:#36393f;--brd:#202225;--acc:#7289da;--acc2:#faa61a;--txt:#fff;--mut:#99aab5}
-.th-canary{--bg:#36393f;--sur:#40444b;--sur2:#2f3136;--brd:#202225;--acc:#7289da;--acc2:#43b581;--txt:#dcddde;--mut:#8e9297}
+.th-canary {--bg:#36393f;--sur:#40444b;--sur2:#2f3136;--brd:#202225;--acc:#7289da;--acc2:#43b581;--txt:#dcddde;--mut:#8e9297}
+
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{height:100%;background:#000}
+html{height:100%}
 body{
   background:var(--bg);color:var(--txt);
   font-family:-apple-system,'Helvetica Neue',sans-serif;
   display:flex;flex-direction:column;
-  height:100%;
+  height:100%;overflow:hidden;
+  padding-top:env(safe-area-inset-top);
   padding-left:env(safe-area-inset-left);
   padding-right:env(safe-area-inset-right);
+  padding-bottom:env(safe-area-inset-bottom);
 }
-/* header */
 .hdr{background:var(--sur);border-bottom:1px solid var(--brd);
-  padding:13px 16px;padding-top:max(13px,env(safe-area-inset-top));
+  padding:13px 16px;
   display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .hdr-title{font-size:17px;font-weight:700;color:var(--acc)}
 .hdr-btn{background:var(--sur2);border:1px solid var(--brd);color:var(--txt);
-  height:34px;padding:0 12px;border-radius:8px;font-size:12px;font-weight:600;
-  white-space:nowrap;cursor:pointer}
-/* nav */
+  height:34px;padding:0 12px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer}
 .nav{display:flex;background:var(--sur);border-bottom:1px solid var(--brd);flex-shrink:0}
 .nav-tab{flex:1;padding:11px 4px;text-align:center;font-size:12px;color:var(--mut);
   cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
 .nav-tab.on{color:var(--acc);border-bottom-color:var(--acc)}
-/* views */
-.view{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;
-  padding-bottom:max(16px,env(safe-area-inset-bottom))}
-/* cal view */
+.view{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
 #vcal{display:flex;flex-direction:column;flex:1;overflow:hidden}
 .banners{padding:5px 10px 3px;display:flex;flex-wrap:wrap;gap:4px;flex-shrink:0}
 .chip{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600}
 .chip-q{background:rgba(88,101,242,.15);color:var(--acc)}
 .chip-s{background:rgba(67,160,71,.15);color:var(--grn)}
 .chip-h{background:rgba(249,168,37,.18);color:var(--yel)}
-/* week nav */
 .wnav{display:flex;align-items:center;justify-content:space-between;padding:5px 10px 3px;flex-shrink:0}
 .wnav-lbl{font-size:13px;color:var(--mut);font-weight:500;text-align:center;flex:1}
 .wnav-btn{background:var(--sur);border:1px solid var(--brd);color:var(--txt);
   width:48px;height:48px;border-radius:12px;font-size:26px;font-weight:300;
   display:flex;align-items:center;justify-content:center;cursor:pointer}
 .wnav-btn:active{background:var(--sur2)}
-/* cal grid */
-.cal-outer{flex:1;overflow:hidden;padding:4px 8px env(safe-area-inset-bottom)}
+.cal-outer{flex:1;overflow:hidden;padding:4px 8px 4px}
 .cal{display:grid;grid-template-columns:42px repeat(6,1fr);gap:3px;height:100%}
 .cal-hd{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:3px 0}
 .cal-hd-day{font-size:10px;font-weight:700;color:var(--mut);line-height:1.3}
@@ -74,15 +69,13 @@ body{
   display:flex;align-items:center;justify-content:center;border-radius:50%}
 .cal-hd-date.today{background:var(--acc);color:#fff}
 .cal-hd.hol .cal-hd-day,.cal-hd.hol .cal-hd-date{color:var(--yel)}
-.tcol{display:flex;flex-direction:column;align-items:flex-end;
-  justify-content:flex-start;padding:5px 4px 0 0}
+.tcol{display:flex;flex-direction:column;align-items:flex-end;justify-content:flex-start;padding:5px 4px 0 0}
 .tcol-p{font-weight:700;font-size:10px;color:var(--txt);line-height:1.3}
 .tcol-t{font-size:8px;color:var(--mut);line-height:1.3;white-space:pre;text-align:right}
 .cell{background:var(--sur);border:1px solid var(--brd);border-radius:6px;
   position:relative;cursor:pointer;overflow:hidden;transition:background .15s}
 .cell:active{background:var(--sur2)}
 .cell.hol{background:rgba(249,168,37,.04);border-color:rgba(249,168,37,.15)}
-/* class block */
 .cblk{position:absolute;inset:2px;border-radius:4px;padding:3px 4px;
   display:flex;flex-direction:column;overflow:hidden}
 .cblk-name{font-size:10px;font-weight:700;line-height:1.25;overflow:hidden;
@@ -104,7 +97,6 @@ body{
 .c5{background:rgba(251,146,60,.18);border-left:3px solid #fb923c}
 .c6{background:rgba(232,121,249,.18);border-left:3px solid #e879f9}
 .c7{background:rgba(56,189,248,.18);border-left:3px solid #38bdf8}
-/* assign list */
 .alist{padding:10px;display:flex;flex-direction:column;gap:6px}
 .aitem{background:var(--sur);border:1px solid var(--brd);border-radius:10px;
   padding:10px 12px;display:flex;align-items:flex-start;gap:10px;cursor:pointer}
@@ -125,13 +117,11 @@ body{
 .due-ok{background:rgba(67,160,71,.15);color:var(--grn)}
 .adel{background:none;border:none;color:var(--red);cursor:pointer;
   font-size:12px;font-weight:600;padding:4px 6px;flex-shrink:0;align-self:center}
-/* settings */
 .slist{padding:10px;display:flex;flex-direction:column;gap:12px}
 .ssec{background:var(--sur);border:1px solid var(--brd);border-radius:12px;overflow:hidden}
 .ssec-hdr{padding:10px 14px;font-size:13px;font-weight:700;
   border-bottom:1px solid var(--brd);display:flex;align-items:center;justify-content:space-between}
-.srow{padding:9px 14px;border-bottom:1px solid var(--brd);
-  display:flex;align-items:center;cursor:pointer}
+.srow{padding:9px 14px;border-bottom:1px solid var(--brd);display:flex;align-items:center;cursor:pointer}
 .srow:last-child{border-bottom:none}
 .srow-l{flex:1;min-width:0}
 .srow-name{font-weight:600;font-size:13px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
@@ -141,31 +131,27 @@ body{
 .bs{background:rgba(67,160,71,.15);color:var(--grn)}
 .bh{background:rgba(249,168,37,.18);color:var(--yel)}
 .be{background:rgba(94,234,212,.18);color:var(--acc2)}
-/* theme grid */
 .tgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:14px}
 .tswatch{height:36px;border-radius:10px;cursor:pointer;border:2px solid transparent}
 .tswatch.on{border-color:var(--txt)}
 .tlabel{font-size:10px;color:var(--mut);text-align:center;margin-top:4px}
-/* sheet */
 .sh-ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;
   display:flex;align-items:flex-end;justify-content:center}
 .sh{background:var(--sur);border-radius:16px 16px 0 0;width:100%;max-width:600px;
-  padding:14px 14px;padding-bottom:max(36px,env(safe-area-inset-bottom));
-  display:flex;flex-direction:column;gap:8px}
+  padding:14px 14px 16px;display:flex;flex-direction:column;gap:8px}
 .sh-title{font-size:12px;color:var(--mut);text-align:center;margin-bottom:4px}
 .sh-btn{background:var(--sur2);border:none;color:var(--txt);border-radius:10px;
   padding:14px;font-size:15px;font-weight:600;cursor:pointer;width:100%}
 .sh-btn.acc{background:var(--acc);color:#fff}
 .sh-cancel{background:none;border:none;color:var(--mut);border-radius:10px;
   padding:12px;font-size:15px;cursor:pointer;width:100%;text-align:center}
-/* modal */
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:200;
   display:flex;align-items:flex-end;justify-content:center}
 .ov.mid{align-items:center}
 .modal{background:var(--sur);border-radius:18px 18px 0 0;width:100%;max-width:600px;
   max-height:88vh;overflow-y:auto;-webkit-overflow-scrolling:touch;
-  padding:18px 14px env(safe-area-inset-bottom)}
-.ov.mid .modal{border-radius:16px;margin:12px;max-height:90vh;padding-bottom:24px}
+  padding:18px 14px 24px}
+.ov.mid .modal{border-radius:16px;margin:12px;max-height:90vh}
 .drag{width:36px;height:4px;background:var(--brd);border-radius:2px;margin:0 auto 14px}
 .modal h2{font-size:17px;font-weight:700;margin-bottom:14px}
 .dsec{margin-bottom:14px}
@@ -181,7 +167,6 @@ body{
 .arow-n{font-size:13px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .arow-d{font-size:10px;color:var(--mut)}
 .arows{display:flex;flex-direction:column;gap:5px;margin-top:6px}
-/* form */
 .fg{margin-bottom:12px}
 .fg label{font-size:11px;color:var(--mut);margin-bottom:4px;display:block}
 .fg input,.fg select,.fg textarea{
@@ -215,49 +200,39 @@ body{
 
 <div class="hdr">
   <span class="hdr-title">Timetable</span>
-  <button class="hdr-btn" onclick="UI.openAddAssign()">+ 課題</button>
+  <button class="hdr-btn" id="btn-add-assign">+ 課題</button>
 </div>
 <div class="nav">
-  <div class="nav-tab on" id="tab-cal" onclick="UI.tab('cal')">カレンダー</div>
-  <div class="nav-tab" id="tab-assign" onclick="UI.tab('assign')">課題</div>
-  <div class="nav-tab" id="tab-settings" onclick="UI.tab('settings')">設定</div>
+  <div class="nav-tab on" id="tab-cal">カレンダー</div>
+  <div class="nav-tab" id="tab-assign">課題</div>
+  <div class="nav-tab" id="tab-settings">設定</div>
 </div>
 
-<!-- Cal view -->
 <div id="vcal" style="display:flex;flex-direction:column;flex:1;overflow:hidden">
   <div id="banners" class="banners" style="display:none"></div>
   <div class="wnav">
-    <button class="wnav-btn" onclick="UI.weekShift(-1)">‹</button>
+    <button class="wnav-btn" id="btn-prev">‹</button>
     <span class="wnav-lbl" id="wlbl"></span>
-    <button class="wnav-btn" onclick="UI.weekShift(1)">›</button>
+    <button class="wnav-btn" id="btn-next">›</button>
   </div>
   <div class="cal-outer" id="cal-outer">
     <div class="cal" id="cal-grid"></div>
   </div>
 </div>
-
-<!-- Assign view -->
-<div id="vassign" class="view" style="display:none">
-  <div id="assign-list" class="alist"></div>
-</div>
-
-<!-- Settings view -->
+<div id="vassign" class="view" style="display:none"><div id="assign-list" class="alist"></div></div>
 <div id="vsettings" class="view" style="display:none">
   <div class="slist">
+    <div class="ssec"><div class="ssec-hdr">テーマ</div><div class="tgrid" id="theme-grid"></div></div>
     <div class="ssec">
-      <div class="ssec-hdr">テーマ</div>
-      <div class="tgrid" id="theme-grid"></div>
-    </div>
-    <div class="ssec">
-      <div class="ssec-hdr"><span>学期・休業期間</span><button class="add-sm" onclick="UI.openPeriod()">+ 追加</button></div>
+      <div class="ssec-hdr"><span>学期・休業期間</span><button class="add-sm" id="btn-add-period">+ 追加</button></div>
       <div id="period-list"></div>
     </div>
     <div class="ssec">
-      <div class="ssec-hdr"><span>クォーター</span><button class="add-sm" onclick="UI.openQuarter()">+ 追加</button></div>
+      <div class="ssec-hdr"><span>クォーター</span><button class="add-sm" id="btn-add-quarter">+ 追加</button></div>
       <div id="quarter-list"></div>
     </div>
     <div class="ssec">
-      <div class="ssec-hdr"><span>行事</span><button class="add-sm" onclick="UI.openEvent()">+ 追加</button></div>
+      <div class="ssec-hdr"><span>行事</span><button class="add-sm" id="btn-add-event">+ 追加</button></div>
       <div id="event-list"></div>
     </div>
   </div>
@@ -269,11 +244,11 @@ body{
     <div class="sh-title" id="cs-title"></div>
     <button class="sh-btn acc" id="cs-class-btn">授業を追加</button>
     <button class="sh-btn" id="cs-memo-btn">メモを追加</button>
-    <button class="sh-cancel" onclick="UI.closeSheet()">キャンセル</button>
+    <button class="sh-cancel" id="cs-cancel-btn">キャンセル</button>
   </div>
 </div>
 
-<!-- Class form modal -->
+<!-- Class modal -->
 <div class="ov mid" id="m-class" style="display:none">
   <div class="modal">
     <div class="drag"></div>
@@ -282,7 +257,7 @@ body{
     <div class="fg"><label>時間割名 *</label><input id="fc-name" type="text" placeholder="例: 線形代数学"></div>
     <div class="fg"><label>時間割番号</label><input id="fc-code" type="text" placeholder="例: MA201"></div>
     <div class="fg"><label>単発授業</label>
-      <select id="fc-single" onchange="UI.toggleSingle()">
+      <select id="fc-single">
         <option value="0">通常（毎週繰り返し）</option>
         <option value="1">単発（特定の1日のみ）</option>
       </select>
@@ -312,19 +287,14 @@ body{
     <div class="fg"><label>メモ</label><textarea id="fc-note" placeholder="オフィスアワーなど"></textarea></div>
     <div class="fg"><label>色</label><div class="crow" id="color-row"></div></div>
     <div class="btn-row">
-      <button class="btn btn-s" onclick="event.stopPropagation();UI.closeModal('m-class')">キャンセル</button>
-      <button class="btn btn-p" onclick="event.stopPropagation();UI.saveClass()">保存</button>
+      <button class="btn btn-s" id="fc-cancel">キャンセル</button>
+      <button class="btn btn-p" id="fc-save">保存</button>
     </div>
-    <div id="del-class-wrap" style="margin-top:8px;display:none">
-      <button class="btn btn-d" id="del-class-btn" type="button"
-        style="-webkit-appearance:none;position:relative;z-index:9999;touch-action:manipulation"
-        ontouchend="event.preventDefault();event.stopPropagation();doDeleteClass(this.dataset.id)"
-        onclick="event.stopPropagation();doDeleteClass(this.dataset.id)">この時間割を削除</button>
-    </div>
+    <div style="margin-top:8px"><button class="btn btn-d" id="fc-delete" style="display:none">この時間割を削除</button></div>
   </div>
 </div>
 
-<!-- Assign form modal -->
+<!-- Assign modal -->
 <div class="ov mid" id="m-assign" style="display:none">
   <div class="modal">
     <div class="drag"></div>
@@ -334,18 +304,16 @@ body{
     <div class="fg"><label>期限</label><input id="fa-due" type="date"></div>
     <div class="fg"><label>メモ</label><textarea id="fa-note"></textarea></div>
     <div class="btn-row">
-      <button class="btn btn-s" onclick="UI.closeModal('m-assign')">キャンセル</button>
-      <button class="btn btn-p" onclick="UI.saveAssign()">保存</button>
+      <button class="btn btn-s" id="fa-cancel">キャンセル</button>
+      <button class="btn btn-p" id="fa-save">保存</button>
     </div>
-    <div id="del-assign-wrap" style="margin-top:8px;display:none">
-      <button class="btn btn-d" id="del-assign-btn" type="button" onclick="doDeleteAssign()">課題を削除</button>
-    </div>
+    <div style="margin-top:8px"><button class="btn btn-d" id="fa-delete" style="display:none">課題を削除</button></div>
   </div>
 </div>
 
 <!-- Detail modal -->
 <div class="ov" id="m-detail" style="display:none">
-  <div class="modal" style="max-height:80vh;overflow-y:auto"><div class="drag"></div><div id="detail-body"></div></div>
+  <div class="modal" style="max-height:80vh"><div class="drag"></div><div id="detail-body"></div></div>
 </div>
 
 <!-- Assign detail modal -->
@@ -360,7 +328,7 @@ body{
     <h2 id="msched-title">スケジュール変更</h2>
     <p style="font-size:12px;color:var(--mut);margin-bottom:12px">この週だけ適用されます。</p>
     <div class="fg"><label>変更の種類</label>
-      <select id="fs-type" onchange="UI.toggleSched()">
+      <select id="fs-type">
         <option value="cancel">休講</option><option value="move">別の日・時限に移動</option>
       </select>
     </div>
@@ -382,8 +350,8 @@ body{
     </div>
     <div class="fg"><label>メモ</label><input id="fs-note" type="text"></div>
     <div class="btn-row">
-      <button class="btn btn-s" onclick="UI.closeModal('m-sched')">キャンセル</button>
-      <button class="btn btn-p" onclick="UI.saveSched()">保存</button>
+      <button class="btn btn-s" id="fs-cancel">キャンセル</button>
+      <button class="btn btn-p" id="fs-save">保存</button>
     </div>
   </div>
 </div>
@@ -395,12 +363,10 @@ body{
     <h2 id="mmemo-title">メモ</h2>
     <div class="fg"><label>メモ内容</label><textarea id="fm-text" style="min-height:100px"></textarea></div>
     <div class="btn-row">
-      <button class="btn btn-s" onclick="UI.closeModal('m-memo')">キャンセル</button>
-      <button class="btn btn-p" onclick="UI.saveMemo()">保存</button>
+      <button class="btn btn-s" id="fm-cancel">キャンセル</button>
+      <button class="btn btn-p" id="fm-save">保存</button>
     </div>
-    <div id="del-memo-wrap" style="margin-top:8px;display:none">
-      <button class="btn btn-d" id="del-memo-btn" type="button">メモを削除</button>
-    </div>
+    <div style="margin-top:8px"><button class="btn btn-d" id="fm-delete" style="display:none">メモを削除</button></div>
   </div>
 </div>
 
@@ -409,19 +375,17 @@ body{
   <div class="modal">
     <div class="drag"></div>
     <h2 id="mperiod-title">学期・休業期間</h2>
-    <div class="fg"><label>名称 *</label><input id="fp-name" type="text" placeholder="例: 前学期 / 夏季休業"></div>
+    <div class="fg"><label>名称 *</label><input id="fp-name" type="text" placeholder="例: 前学期"></div>
     <div class="fg"><label>種別</label><select id="fp-type"><option value="semester">学期</option><option value="holiday">休業・休暇</option></select></div>
     <div class="frow">
       <div class="fg"><label>開始日 *</label><input id="fp-start" type="date"></div>
       <div class="fg"><label>終了日 *</label><input id="fp-end" type="date"></div>
     </div>
     <div class="btn-row">
-      <button class="btn btn-s" onclick="UI.closeModal('m-period')">キャンセル</button>
-      <button class="btn btn-p" onclick="UI.savePeriod()">保存</button>
+      <button class="btn btn-s" id="fp-cancel">キャンセル</button>
+      <button class="btn btn-p" id="fp-save">保存</button>
     </div>
-    <div id="del-period-wrap" style="margin-top:8px;display:none">
-      <button class="btn btn-d" id="del-period-btn" type="button">削除</button>
-    </div>
+    <div style="margin-top:8px"><button class="btn btn-d" id="fp-delete" style="display:none">削除</button></div>
   </div>
 </div>
 
@@ -436,12 +400,10 @@ body{
       <div class="fg"><label>終了日 *</label><input id="fq-end" type="date"></div>
     </div>
     <div class="btn-row">
-      <button class="btn btn-s" onclick="UI.closeModal('m-quarter')">キャンセル</button>
-      <button class="btn btn-p" onclick="UI.saveQuarter()">保存</button>
+      <button class="btn btn-s" id="fq-cancel">キャンセル</button>
+      <button class="btn btn-p" id="fq-save">保存</button>
     </div>
-    <div id="del-quarter-wrap" style="margin-top:8px;display:none">
-      <button class="btn btn-d" id="del-quarter-btn" type="button">削除</button>
-    </div>
+    <div style="margin-top:8px"><button class="btn btn-d" id="fq-delete" style="display:none">削除</button></div>
   </div>
 </div>
 
@@ -457,232 +419,252 @@ body{
     </div>
     <div class="fg"><label>メモ</label><input id="fe-note" type="text"></div>
     <div class="btn-row">
-      <button class="btn btn-s" onclick="UI.closeModal('m-event')">キャンセル</button>
-      <button class="btn btn-p" onclick="UI.saveEvent()">保存</button>
+      <button class="btn btn-s" id="fe-cancel">キャンセル</button>
+      <button class="btn btn-p" id="fe-save">保存</button>
     </div>
-    <div id="del-event-wrap" style="margin-top:8px;display:none">
-      <button class="btn btn-d" id="del-event-btn" type="button">削除</button>
-    </div>
+    <div style="margin-top:8px"><button class="btn btn-d" id="fe-delete" style="display:none">削除</button></div>
   </div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════════
-// DATA
-// ═══════════════════════════════════════════════
-const DB_KEY = 'tt_v7';
+'use strict';
+// ═══════════════════════════════════════════
+// DB
+// ═══════════════════════════════════════════
+const DB_KEY = 'tt_v8';
 let D = {classes:[], assignments:[], scheds:[], quarters:[], periods:[], events:[], memos:[], theme:'minimal'};
-
 function dbLoad(){
-  try{ const s=localStorage.getItem(DB_KEY); if(s) D={...D,...JSON.parse(s)}; }catch(e){}
+  try{
+    const s = localStorage.getItem(DB_KEY);
+    if(s){ const p = JSON.parse(s); Object.assign(D, p); }
+  }catch(e){ console.error('load error', e); }
 }
-function dbSave(){ localStorage.setItem(DB_KEY, JSON.stringify(D)); }
-function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,5); }
+function dbSave(){
+  try{ localStorage.setItem(DB_KEY, JSON.stringify(D)); }
+  catch(e){ console.error('save error', e); }
+}
+function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,5); }
 
-// ═══════════════════════════════════════════════
-// DATE UTILS
-// ═══════════════════════════════════════════════
-const DAYS  = ['月','火','水','木','金','土'];
-const PLBLS = ['1限','2限','3限','4限','5限'];
-const PTIMES= ['8:30\n〜10:00','10:20\n〜11:50','12:40\n〜14:10','14:30\n〜16:00','16:20\n〜17:50'];
-const COLORS= ['#7c6af7','#5eead4','#fbbf24','#f87171','#4ade80','#fb923c','#e879f9','#38bdf8'];
+// ═══════════════════════════════════════════
+// DATE
+// ═══════════════════════════════════════════
+const DAYS   = ['月','火','水','木','金','土'];
+const PLBLS  = ['1限','2限','3限','4限','5限'];
+const PTIMES = ['8:30\n〜10:00','10:20\n〜11:50','12:40\n〜14:10','14:30\n〜16:00','16:20\n〜17:50'];
+const CCOLORS= ['#7c6af7','#5eead4','#fbbf24','#f87171','#4ade80','#fb923c','#e879f9','#38bdf8'];
 
-// ローカル日付をYYYY-MM-DD文字列に（タイムゾーン安全）
 function dstr(d){
   return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
 }
-// YYYY-MM-DD → ローカルDateオブジェクト
 function dparse(s){ return new Date(s+'T00:00:00'); }
-// M/D表示
-function dfmt(s){ if(!s)return''; const d=dparse(s); return `${d.getMonth()+1}/${d.getDate()}`; }
+function dfmt(s){ if(!s)return''; const d=dparse(s); return (d.getMonth()+1)+'/'+d.getDate(); }
 
-// 今週の月曜日（offset週ずらし）
-// 日曜=翌月曜の週に属する（大学の授業週は月〜土）
 let weekOffset = 0;
 function getMonday(off){
-  const now=new Date(); now.setHours(0,0,0,0);
-  const dow=now.getDay(); // 0=日,1=月,...,6=土
-  const diff = (dow===0) ? 1 : 1-dow; // 日曜なら+1（翌月曜）、月曜なら0、火曜なら-1…
-  now.setDate(now.getDate()+diff+off*7);
+  const now = new Date(); now.setHours(0,0,0,0);
+  const dow = now.getDay();
+  const diff = (dow === 0) ? 1 : 1 - dow;
+  now.setDate(now.getDate() + diff + off * 7);
   return now;
 }
-// 月〜土の日付文字列配列（長さ6）
 function getWeekDates(off){
-  const mon=getMonday(off);
-  return Array.from({length:6},(_,i)=>{
-    const d=new Date(mon.getFullYear(), mon.getMonth(), mon.getDate()+i);
-    return dstr(d);
+  const mon = getMonday(off);
+  return Array.from({length:6}, function(_,i){
+    return dstr(new Date(mon.getFullYear(), mon.getMonth(), mon.getDate()+i));
   });
 }
 function weekKey(off){ return dstr(getMonday(off)); }
 
-// ═══════════════════════════════════════════════
-// BUSINESS LOGIC
-// ═══════════════════════════════════════════════
+function dueFmt(s){
+  const d = dparse(s);
+  const today = new Date(); today.setHours(0,0,0,0);
+  const diff = Math.round((d - today) / 86400000);
+  if(diff < 0)  return {txt: Math.abs(diff)+'日超過', cls:'due-ov'};
+  if(diff === 0)return {txt:'今日締切', cls:'due-td'};
+  if(diff === 1)return {txt:'明日締切', cls:'due-sn'};
+  if(diff <= 3) return {txt: dfmt(s)+'まで', cls:'due-sn'};
+  return              {txt: dfmt(s)+'まで', cls:'due-ok'};
+}
 
-// 時間割番号が同じ授業の代表ID（番号なし→自分自身）
+// ═══════════════════════════════════════════
+// BUSINESS LOGIC
+// ═══════════════════════════════════════════
 function repId(classId){
   if(!classId) return null;
-  const c=D.classes.find(x=>x.id===classId);
-  if(!c||!c.code||!c.code.trim()) return classId;
-  const group=D.classes.filter(x=>x.code&&x.code.trim()===c.code.trim());
-  group.sort((a,b)=>a.id.localeCompare(b.id));
+  const c = D.classes.find(function(x){ return x.id === classId; });
+  if(!c || !c.code || !c.code.trim()) return classId;
+  const group = D.classes.filter(function(x){ return x.code && x.code.trim() === c.code.trim(); });
+  group.sort(function(a,b){ return a.id.localeCompare(b.id); });
   return group[0].id;
 }
-
-// その授業に紐づく課題（代表IDで検索）
 function classAssigns(cls){
-  const rid=repId(cls.id);
-  return D.assignments.filter(a=>a.classId===rid);
+  const rid = repId(cls.id);
+  return D.assignments.filter(function(a){ return a.classId === rid; });
 }
+function qIdsFor(ds){ return D.quarters.filter(function(q){ return q.start<=ds&&ds<=q.end; }).map(function(q){ return q.id; }); }
+function isHol(ds){ return D.periods.some(function(p){ return p.type==='holiday'&&p.start<=ds&&ds<=p.end; }); }
+function eventsFor(ds){ return D.events.filter(function(e){ return e.start<=ds&&ds<=(e.end||e.start); }); }
 
-// その日付が含まれるクォーターID一覧
-function qIdsFor(ds){ return D.quarters.filter(q=>q.start<=ds&&ds<=q.end).map(q=>q.id); }
-// その日が休業期間か
-function isHol(ds){ return D.periods.some(p=>p.type==='holiday'&&p.start<=ds&&ds<=p.end); }
-// その日の行事
-function eventsFor(ds){ return D.events.filter(e=>e.start<=ds&&ds<=(e.end||e.start)); }
-// その週・その日時に表示すべき授業を返す
-function cellClass(d, p, ds, wk, aqIds){
-  const chg=D.scheds.find(s=>s.week===wk&&s.origDay===d&&s.origPeriod===p);
-  if(chg&&chg.type==='cancel') return {cls:null, cancelled:true, note:chg.note};
-  if(chg&&chg.type==='move')   return {cls:null, cancelled:false, changed:false};
-  // 通常授業
-  let cls=D.classes.find(c=>{
-    if(c.isSingle) return c.singleDate===ds&&c.day===d&&c.period===p;
-    return c.day===d&&c.period===p&&(!c.quarterId||aqIds.includes(c.quarterId));
-  });
-  // 移動してきた授業
-  const mv=D.scheds.find(s=>s.week===wk&&s.type==='move'&&s.newDay===d&&s.newPeriod===p);
-  if(mv) cls=D.classes.find(c=>c.day===mv.origDay&&c.period===mv.origPeriod&&(!c.quarterId||aqIds.includes(c.quarterId)));
-  return {cls:cls||null, cancelled:false, changed:!!mv};
-}
-
-// 期限表示
-function dueFmt(s){
-  const diff=Math.round((dparse(s)-new Date().setHours(0,0,0,0))/86400000);
-  if(diff<0)  return {txt:`${Math.abs(diff)}日超過`, cls:'due-ov'};
-  if(diff===0)return {txt:'今日締切', cls:'due-td'};
-  if(diff===1)return {txt:'明日締切', cls:'due-sn'};
-  if(diff<=3) return {txt:`${dfmt(s)}まで`, cls:'due-sn'};
-  return       {txt:`${dfmt(s)}まで`, cls:'due-ok'};
-}
-
-// ═══════════════════════════════════════════════
-// THEMES
-// ═══════════════════════════════════════════════
-const THEMES=[
-  {id:'minimal', label:'Minimal', bg:'#fafafa', acc:'#222'},
-  {id:'white',   label:'White',   bg:'#ffffff', acc:'#5865f2'},
-  {id:'cream',   label:'Cream',   bg:'#fdfaf5', acc:'#c07c3a'},
-  {id:'cool',    label:'Cool',    bg:'#f5f7fb', acc:'#2563eb'},
-  {id:'light',   label:'Light',   bg:'#f2f3f5', acc:'#5865f2'},
-  {id:'dark',    label:'Dark',    bg:'#313338', acc:'#5865f2'},
-  {id:'darker',  label:'Darker',  bg:'#1e1f22', acc:'#5865f2'},
-  {id:'midnight',label:'Midnight',bg:'#0d0d0f', acc:'#5865f2'},
-  {id:'classic', label:'Classic', bg:'#23272a', acc:'#7289da'},
-  {id:'canary',  label:'Canary',  bg:'#36393f', acc:'#7289da'},
+// ═══════════════════════════════════════════
+// THEME
+// ═══════════════════════════════════════════
+const THEMES = [
+  {id:'minimal',  label:'Minimal', bg:'#fafafa', acc:'#222'},
+  {id:'white',    label:'White',   bg:'#ffffff', acc:'#5865f2'},
+  {id:'cream',    label:'Cream',   bg:'#fdfaf5', acc:'#c07c3a'},
+  {id:'cool',     label:'Cool',    bg:'#f5f7fb', acc:'#2563eb'},
+  {id:'light',    label:'Light',   bg:'#f2f3f5', acc:'#5865f2'},
+  {id:'dark',     label:'Dark',    bg:'#313338', acc:'#5865f2'},
+  {id:'darker',   label:'Darker',  bg:'#1e1f22', acc:'#5865f2'},
+  {id:'midnight', label:'Midnight',bg:'#0d0d0f', acc:'#5865f2'},
+  {id:'classic',  label:'Classic', bg:'#23272a', acc:'#7289da'},
+  {id:'canary',   label:'Canary',  bg:'#36393f', acc:'#7289da'},
 ];
 function applyTheme(id){
-  document.body.className='th-'+id;
-  D.theme=id; dbSave(); renderThemeGrid();
+  document.body.className = 'th-'+id;
+  D.theme = id; dbSave(); renderThemeGrid();
 }
 function renderThemeGrid(){
-  document.getElementById('theme-grid').innerHTML=THEMES.map(t=>`
-    <div style="cursor:pointer" onclick="applyTheme('${t.id}')">
-      <div class="tswatch${D.theme===t.id?' on':''}" style="background:${t.bg};border-color:${D.theme===t.id?'var(--txt)':t.acc}"></div>
-      <div class="tlabel">${t.label}</div>
-    </div>`).join('');
+  document.getElementById('theme-grid').innerHTML = THEMES.map(function(t){
+    return '<div style="cursor:pointer" data-theme="'+t.id+'">'
+      +'<div class="tswatch'+(D.theme===t.id?' on':'')+'" style="background:'+t.bg+';border-color:'+(D.theme===t.id?'var(--txt)':t.acc)+'"></div>'
+      +'<div class="tlabel">'+t.label+'</div>'
+      +'</div>';
+  }).join('');
+  document.getElementById('theme-grid').querySelectorAll('[data-theme]').forEach(function(el){
+    el.addEventListener('click', function(){ applyTheme(el.dataset.theme); });
+  });
 }
 
-// ═══════════════════════════════════════════════
-// RENDER
-// ═══════════════════════════════════════════════
-function renderCal(){
-  const dates=getWeekDates(weekOffset);
-  const wk=weekKey(weekOffset);
-  const mon=getMonday(weekOffset);
-  document.getElementById('wlbl').textContent=mon.toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric'})+'〜';
-
-  // Banners
-  const bmap=new Map();
-  dates.forEach(ds=>{
-    D.quarters.filter(q=>q.start<=ds&&ds<=q.end).forEach(q=>{ if(!bmap.has('q'+q.id)) bmap.set('q'+q.id,{label:q.name,cls:'chip-q'}); });
-    D.periods.filter(p=>p.start<=ds&&ds<=p.end).forEach(p=>{ if(!bmap.has('p'+p.id)) bmap.set('p'+p.id,{label:p.name,cls:p.type==='holiday'?'chip-h':'chip-s'}); });
+// ═══════════════════════════════════════════
+// MODAL HELPERS
+// ═══════════════════════════════════════════
+function showModal(id){ document.getElementById(id).style.display='flex'; }
+function hideModal(id){
+  document.getElementById(id).style.display='none';
+  if(id==='m-detail') renderCal();
+}
+// オーバーレイ外タップで閉じる
+document.addEventListener('DOMContentLoaded', function(){
+  document.querySelectorAll('.ov').forEach(function(ov){
+    ov.addEventListener('click', function(e){
+      if(e.target === ov) hideModal(ov.id);
+    });
   });
-  const bd=document.getElementById('banners');
-  if(bmap.size){ bd.style.display='flex'; bd.innerHTML=[...bmap.values()].map(b=>`<span class="chip ${b.cls}">${b.label}</span>`).join(''); }
-  else bd.style.display='none';
+  document.getElementById('cell-sheet').addEventListener('click', function(e){
+    if(e.target === document.getElementById('cell-sheet')) hideSheet();
+  });
+});
 
-  const grid=document.getElementById('cal-grid');
-  grid.innerHTML='';
+// ═══════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════
+function renderCal(){
+  const dates = getWeekDates(weekOffset);
+  const wk = weekKey(weekOffset);
+  const mon = getMonday(weekOffset);
+  const end = new Date(mon.getFullYear(), mon.getMonth(), mon.getDate()+5);
+  document.getElementById('wlbl').textContent =
+    mon.toLocaleDateString('ja-JP',{month:'long',day:'numeric'}) + '〜' +
+    end.toLocaleDateString('ja-JP',{month:'long',day:'numeric'});
 
-  // 行高さ計算（safe-area-inset-bottomを考慮）
-  const outer=document.getElementById('cal-outer');
-  const safeBottom = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--sab') || '0') || 0;
-  const HEAD=44;
-  const ch=Math.max(52, Math.floor((outer.clientHeight-8-HEAD-4*3-safeBottom)/5));
-  grid.style.gridTemplateRows=`${HEAD}px repeat(5,${ch}px)`;
-  grid.style.gridTemplateColumns='42px repeat(6,1fr)';
+  // banners
+  const bmap = new Map();
+  dates.forEach(function(ds){
+    D.quarters.filter(function(q){ return q.start<=ds&&ds<=q.end; }).forEach(function(q){
+      if(!bmap.has('q'+q.id)) bmap.set('q'+q.id, {label:q.name, cls:'chip-q'});
+    });
+    D.periods.filter(function(p){ return p.start<=ds&&ds<=p.end; }).forEach(function(p){
+      if(!bmap.has('p'+p.id)) bmap.set('p'+p.id, {label:p.name, cls:p.type==='holiday'?'chip-h':'chip-s'});
+    });
+  });
+  const bd = document.getElementById('banners');
+  if(bmap.size){
+    bd.style.display='flex';
+    bd.innerHTML = Array.from(bmap.values()).map(function(b){ return '<span class="chip '+b.cls+'">'+b.label+'</span>'; }).join('');
+  } else { bd.style.display='none'; }
 
-  const todayStr=dstr(new Date());
+  const grid = document.getElementById('cal-grid');
+  grid.innerHTML = '';
+  const outer = document.getElementById('cal-outer');
+  const HEAD = 44;
+  const ch = Math.max(52, Math.floor((outer.clientHeight - 8 - HEAD - 4*3) / 5));
+  grid.style.gridTemplateRows = HEAD+'px repeat(5,'+ch+'px)';
+  grid.style.gridTemplateColumns = '42px repeat(6,1fr)';
 
-  // コーナー
+  const todayStr = dstr(new Date());
   grid.appendChild(document.createElement('div'));
-  // ヘッダー行
-  for(let d=0;d<6;d++){
-    const ds=dates[d];
-    const isT=(ds===todayStr);
-    const hol=isHol(ds);
-    const h=document.createElement('div');
-    h.className='cal-hd'+(hol?' hol':'');
-    const dt=dparse(ds);
-    h.innerHTML=`<div class="cal-hd-day">${DAYS[d]}</div><div class="cal-hd-date${isT?' today':''}">${dt.getDate()}</div>`;
+
+  for(let d=0; d<6; d++){
+    const ds = dates[d];
+    const dt = dparse(ds);
+    const h = document.createElement('div');
+    h.className = 'cal-hd' + (isHol(ds)?' hol':'');
+    h.innerHTML = '<div class="cal-hd-day">'+DAYS[d]+'</div>'
+      +'<div class="cal-hd-date'+(ds===todayStr?' today':'')+'">'+dt.getDate()+'</div>';
     grid.appendChild(h);
   }
 
-  // データ行
-  for(let p=0;p<5;p++){
-    const tc=document.createElement('div'); tc.className='tcol';
-    tc.innerHTML=`<span class="tcol-p">${PLBLS[p]}</span><span class="tcol-t">${PTIMES[p]}</span>`;
+  for(let p=0; p<5; p++){
+    const tc = document.createElement('div'); tc.className='tcol';
+    tc.innerHTML = '<span class="tcol-p">'+PLBLS[p]+'</span><span class="tcol-t">'+PTIMES[p]+'</span>';
     grid.appendChild(tc);
 
-    for(let d=0;d<6;d++){
-      const ds=dates[d];
-      const aqIds=qIdsFor(ds);
-      const {cls,cancelled,changed}=cellClass(d,p,ds,wk,aqIds);
-      const evs=eventsFor(ds);
-      const memo=D.memos.find(m=>m.week===wk&&m.day===d&&m.period===p);
+    for(let d=0; d<6; d++){
+      const ds = dates[d];
+      const aqIds = qIdsFor(ds);
+      const cell = document.createElement('div');
+      cell.className = 'cell' + (isHol(ds)?' hol':'');
 
-      const cell=document.createElement('div');
-      cell.className='cell'+(isHol(ds)?' hol':'');
+      const chg = D.scheds.find(function(s){ return s.week===wk&&s.origDay===d&&s.origPeriod===p; });
+      const mv  = D.scheds.find(function(s){ return s.week===wk&&s.type==='move'&&s.newDay===d&&s.newPeriod===p; });
 
-      if(cancelled){
-        const b=document.createElement('div'); b.className='cblk';
+      let cls = null;
+      if(chg && chg.type==='cancel'){
+        // 空欄（休講表示）
+      } else if(chg && chg.type==='move'){
+        // 移動元は空
+      } else {
+        cls = D.classes.find(function(c){
+          if(c.isSingle) return c.singleDate===ds&&c.day===d&&c.period===p;
+          return c.day===d&&c.period===p&&(!c.quarterId||aqIds.includes(c.quarterId));
+        });
+      }
+      if(mv){
+        cls = D.classes.find(function(c){
+          return c.day===mv.origDay&&c.period===mv.origPeriod&&(!c.quarterId||aqIds.includes(c.quarterId));
+        });
+      }
+
+      const evs = eventsFor(ds);
+      const memo = D.memos.find(function(m){ return m.week===wk&&m.day===d&&m.period===p; });
+
+      if(chg && chg.type==='cancel'){
+        const b = document.createElement('div'); b.className='cblk';
         b.style.cssText='background:rgba(229,57,53,.1);border-left:3px solid var(--red)';
-        b.innerHTML=`<div class="cblk-name" style="color:var(--red)">休講</div>`;
+        b.innerHTML='<div class="cblk-name" style="color:var(--red)">休講</div>';
         cell.appendChild(b);
       } else if(cls){
-        const hasUndone=classAssigns(cls).some(a=>!a.done);
-        const ci=cls.colorIdx%8;
-        const b=document.createElement('div'); b.className='cblk c'+ci;
-        b.innerHTML=`<div class="cblk-name">${cls.name}</div><div class="cblk-sp"></div>`+
-          `<div class="cblk-room">${changed?'[変更] ':''}${cls.room||''}</div>`+
-          (hasUndone?'<div class="cblk-dot"></div>':'');
+        const hasUndone = classAssigns(cls).some(function(a){ return !a.done; });
+        const ci = cls.colorIdx % 8;
+        const b = document.createElement('div'); b.className='cblk c'+ci;
+        b.innerHTML = '<div class="cblk-name">'+cls.name+'</div><div class="cblk-sp"></div>'
+          +'<div class="cblk-room">'+(mv?'[変更] ':'')+(cls.room||'')+'</div>'
+          +(hasUndone?'<div class="cblk-dot"></div>':'');
         cell.appendChild(b);
-        cell.onclick=()=>UI.openDetail(cls.id);
+        (function(clsId){ cell.addEventListener('click', function(){ openDetail(clsId); }); })(cls.id);
       } else if(memo){
-        const b=document.createElement('div'); b.className='memo-blk';
-        b.innerHTML=`<div class="memo-txt">${memo.text}</div>`;
+        const b = document.createElement('div'); b.className='memo-blk';
+        b.innerHTML='<div class="memo-txt">'+memo.text+'</div>';
         cell.appendChild(b);
-        cell.onclick=()=>UI.openMemo(d,p,wk);
+        (function(dd,pp,wkk){ cell.addEventListener('click', function(){ openMemoForm(dd,pp,wkk); }); })(d,p,wk);
       } else {
-        cell.onclick=()=>UI.openCellSheet(d,p,ds,wk);
+        (function(dd,pp,dds,wkk){ cell.addEventListener('click', function(){ openCellSheet(dd,pp,dds,wkk); }); })(d,p,ds,wk);
       }
 
       if(evs.length){
-        const e=document.createElement('div'); e.className='ev-dot';
-        e.textContent='* '+evs.map(x=>x.name).join(' ');
+        const e = document.createElement('div'); e.className='ev-dot';
+        e.textContent = '* '+evs.map(function(x){ return x.name; }).join(' ');
         cell.appendChild(e);
       }
       grid.appendChild(cell);
@@ -691,203 +673,445 @@ function renderCal(){
 }
 
 function renderAssigns(){
-  const el=document.getElementById('assign-list');
-  const undone=[...D.assignments].filter(a=>!a.done).sort((a,b)=>(!a.due&&!b.due)?0:!a.due?1:!b.due?-1:a.due.localeCompare(b.due));
-  const done  =[...D.assignments].filter(a=> a.done).sort((a,b)=>(!a.due&&!b.due)?0:!a.due?1:!b.due?-1:a.due.localeCompare(b.due));
-  const all=[...undone,...done];
-  if(!all.length){ el.innerHTML=`<div class="empty">課題はありません<br>「+ 課題」ボタンで追加できます</div>`; return; }
-  el.innerHTML=all.map(a=>{
-    const cls=a.classId?D.classes.find(c=>c.id===a.classId):null;
-    const lbl=cls?(cls.code?`${cls.name} (${cls.code})`:cls.name):'科目なし';
-    const np=a.note&&a.note.length>30?a.note.slice(0,30)+'...':a.note||'';
-    const due=a.due?dueFmt(a.due):null;
-    return `<div class="aitem" onclick="UI.openADetail('${a.id}')">
-      <div class="achk${a.done?' done':''}" onclick="event.stopPropagation();UI.toggleAssign('${a.id}')"></div>
-      <div class="ainfo">
-        <div class="aname${a.done?' done':''}">${a.name}</div>
-        <div class="ameta">${lbl}</div>
-        ${due?`<span class="adue ${due.cls}">${due.txt}</span>`:''}
-        ${np?`<div class="anote">${np}</div>`:''}
-      </div>
-      <button class="adel" onclick="event.stopPropagation();UI.deleteAssign('${a.id}')">削除</button>
-    </div>`;
-  }).join('');
+  const el = document.getElementById('assign-list');
+  function sortFn(a,b){
+    if(!a.due&&!b.due) return 0;
+    if(!a.due) return 1; if(!b.due) return -1;
+    return a.due.localeCompare(b.due);
+  }
+  const undone = D.assignments.filter(function(a){ return !a.done; }).sort(sortFn);
+  const done   = D.assignments.filter(function(a){ return  a.done; }).sort(sortFn);
+  const all = undone.concat(done);
+  if(!all.length){ el.innerHTML='<div class="empty">課題はありません</div>'; return; }
+  el.innerHTML = '';
+  all.forEach(function(a){
+    const cls = a.classId ? D.classes.find(function(c){ return c.id===a.classId; }) : null;
+    const lbl = cls ? (cls.code ? cls.name+' ('+cls.code+')' : cls.name) : '科目なし';
+    const np  = a.note && a.note.length>30 ? a.note.slice(0,30)+'...' : (a.note||'');
+    const due = a.due ? dueFmt(a.due) : null;
+
+    const div = document.createElement('div'); div.className='aitem';
+    const chk = document.createElement('div'); chk.className='achk'+(a.done?' done':'');
+    const info = document.createElement('div'); info.className='ainfo';
+    const delBtn = document.createElement('button'); delBtn.className='adel'; delBtn.textContent='削除';
+
+    info.innerHTML = '<div class="aname'+(a.done?' done':'')+'">'+a.name+'</div>'
+      +'<div class="ameta">'+lbl+'</div>'
+      +(due?'<span class="adue '+due.cls+'">'+due.txt+'</span>':'')
+      +(np?'<div class="anote">'+np+'</div>':'');
+
+    div.appendChild(chk); div.appendChild(info); div.appendChild(delBtn);
+
+    div.addEventListener('click', function(){ openADetail(a.id); });
+    chk.addEventListener('click', function(e){ e.stopPropagation(); toggleAssign(a.id); });
+    delBtn.addEventListener('click', function(e){ e.stopPropagation(); deleteAssign(a.id); });
+    el.appendChild(div);
+  });
 }
 
 function renderSettings(){
-  const ps=[...D.periods].sort((a,b)=>a.start.localeCompare(b.start));
-  document.getElementById('period-list').innerHTML=ps.length?ps.map(p=>`
-    <div class="srow" onclick="UI.openPeriod('${p.id}')">
-      <div class="srow-l"><div class="srow-name">${p.name}</div><div class="srow-sub">${dfmt(p.start)} 〜 ${dfmt(p.end)}</div></div>
-      <span class="sbadge ${p.type==='holiday'?'bh':'bs'}">${p.type==='holiday'?'休業':'学期'}</span>
-    </div>`).join(''):'<div style="padding:12px;text-align:center;color:var(--mut);font-size:12px">未設定</div>';
+  const ps = D.periods.slice().sort(function(a,b){ return a.start.localeCompare(b.start); });
+  const pl = document.getElementById('period-list');
+  pl.innerHTML = ps.length ? '' : '<div style="padding:12px;text-align:center;color:var(--mut);font-size:12px">未設定</div>';
+  ps.forEach(function(p){
+    const d = document.createElement('div'); d.className='srow';
+    d.innerHTML='<div class="srow-l"><div class="srow-name">'+p.name+'</div>'
+      +'<div class="srow-sub">'+dfmt(p.start)+' 〜 '+dfmt(p.end)+'</div></div>'
+      +'<span class="sbadge '+(p.type==='holiday'?'bh':'bs')+'">'+(p.type==='holiday'?'休業':'学期')+'</span>';
+    d.addEventListener('click', function(){ openPeriod(p.id); });
+    pl.appendChild(d);
+  });
 
-  const qs=[...D.quarters].sort((a,b)=>a.start.localeCompare(b.start));
-  document.getElementById('quarter-list').innerHTML=qs.length?qs.map(q=>`
-    <div class="srow" onclick="UI.openQuarter('${q.id}')">
-      <div class="srow-l"><div class="srow-name">${q.name}</div><div class="srow-sub">${dfmt(q.start)} 〜 ${dfmt(q.end)}</div></div>
-      <span class="sbadge bq">Q</span>
-    </div>`).join(''):'<div style="padding:12px;text-align:center;color:var(--mut);font-size:12px">未設定</div>';
+  const qs = D.quarters.slice().sort(function(a,b){ return a.start.localeCompare(b.start); });
+  const ql = document.getElementById('quarter-list');
+  ql.innerHTML = qs.length ? '' : '<div style="padding:12px;text-align:center;color:var(--mut);font-size:12px">未設定</div>';
+  qs.forEach(function(q){
+    const d = document.createElement('div'); d.className='srow';
+    d.innerHTML='<div class="srow-l"><div class="srow-name">'+q.name+'</div>'
+      +'<div class="srow-sub">'+dfmt(q.start)+' 〜 '+dfmt(q.end)+'</div></div>'
+      +'<span class="sbadge bq">Q</span>';
+    d.addEventListener('click', function(){ openQuarter(q.id); });
+    ql.appendChild(d);
+  });
 
-  const es=[...D.events].sort((a,b)=>a.start.localeCompare(b.start));
-  document.getElementById('event-list').innerHTML=es.length?es.map(e=>`
-    <div class="srow" onclick="UI.openEvent('${e.id}')">
-      <div class="srow-l"><div class="srow-name">${e.name}</div><div class="srow-sub">${dfmt(e.start)}${e.end&&e.end!==e.start?' 〜 '+dfmt(e.end):''}${e.note?' · '+e.note:''}</div></div>
-      <span class="sbadge be">行事</span>
-    </div>`).join(''):'<div style="padding:12px;text-align:center;color:var(--mut);font-size:12px">未設定</div>';
+  const es = D.events.slice().sort(function(a,b){ return a.start.localeCompare(b.start); });
+  const el = document.getElementById('event-list');
+  el.innerHTML = es.length ? '' : '<div style="padding:12px;text-align:center;color:var(--mut);font-size:12px">未設定</div>';
+  es.forEach(function(e){
+    const d = document.createElement('div'); d.className='srow';
+    d.innerHTML='<div class="srow-l"><div class="srow-name">'+e.name+'</div>'
+      +'<div class="srow-sub">'+dfmt(e.start)+(e.end&&e.end!==e.start?' 〜 '+dfmt(e.end):'')+(e.note?' · '+e.note:'')+'</div></div>'
+      +'<span class="sbadge be">行事</span>';
+    d.addEventListener('click', function(){ openEvent(e.id); });
+    el.appendChild(d);
+  });
 }
 
-// ═══════════════════════════════════════════════
-// UI CONTROLLER
-// ═══════════════════════════════════════════════
-const UI = (()=>{
-  // 編集中のID群
-  let _clsId=null, _assignId=null, _schedId=null;
-  let _memoDay=null, _memoPeriod=null, _memoWeek=null;
-  let _selColor=0;
-
-  // --- タブ ---
-  function tab(t){
-    ['cal','assign','settings'].forEach(x=>{
-      document.getElementById('v'+x).style.display = x===t?(x==='cal'?'flex':'block'):'none';
-      document.getElementById('tab-'+x).className = 'nav-tab'+(x===t?' on':'');
-    });
-    if(t==='assign') renderAssigns();
-    if(t==='settings'){ renderSettings(); renderThemeGrid(); }
-  }
-  function weekShift(d){ weekOffset+=d; renderCal(); }
-
-  // --- モーダル開閉 ---
-  function closeModal(id){
-    document.getElementById(id).style.display='none';
-    if(id==='m-detail') renderCal();
-  }
-  // オーバーレイ背景タップで閉じる（モーダル内部は無視）
-  document.querySelectorAll('.ov').forEach(ov=>{
-    ov.addEventListener('click',function(e){
-      if(e.target===ov) closeModal(ov.id);
-    });
-    // モーダル内のクリックがオーバーレイに伝播しないようにする
-    const modal=ov.querySelector('.modal');
-    if(modal){
-      modal.addEventListener('click',function(e){ e.stopPropagation(); });
-    }
+// ═══════════════════════════════════════════
+// TAB
+// ═══════════════════════════════════════════
+function switchTab(t){
+  ['cal','assign','settings'].forEach(function(x){
+    document.getElementById('v'+x).style.display = x===t ? (x==='cal'?'flex':'block') : 'none';
+    document.getElementById('tab-'+x).className = 'nav-tab'+(x===t?' on':'');
   });
-  // セルシート背景タップで閉じる
-  document.getElementById('cell-sheet').addEventListener('click',e=>{
-    if(e.target===document.getElementById('cell-sheet')) closeSheet();
+  if(t==='assign') renderAssigns();
+  if(t==='settings'){ renderSettings(); renderThemeGrid(); }
+}
+
+// ═══════════════════════════════════════════
+// CELL SHEET
+// ═══════════════════════════════════════════
+let _sheetDay, _sheetPeriod, _sheetDs, _sheetWk;
+function openCellSheet(d,p,ds,wk){
+  _sheetDay=d; _sheetPeriod=p; _sheetDs=ds; _sheetWk=wk;
+  document.getElementById('cs-title').textContent = DAYS[d]+'曜 '+PLBLS[p];
+  document.getElementById('cell-sheet').style.display='flex';
+}
+function hideSheet(){ document.getElementById('cell-sheet').style.display='none'; }
+
+// ═══════════════════════════════════════════
+// MEMO
+// ═══════════════════════════════════════════
+let _memoDay, _memoPeriod, _memoWk;
+function openMemoForm(d,p,wk){
+  _memoDay=d; _memoPeriod=p; _memoWk=wk;
+  const ex = D.memos.find(function(m){ return m.week===wk&&m.day===d&&m.period===p; });
+  document.getElementById('mmemo-title').textContent = DAYS[d]+'曜 '+PLBLS[p];
+  document.getElementById('fm-text').value = ex ? ex.text : '';
+  document.getElementById('fm-delete').style.display = ex ? 'block' : 'none';
+  showModal('m-memo');
+}
+
+// ═══════════════════════════════════════════
+// CLASS FORM
+// ═══════════════════════════════════════════
+let _clsId = null;
+let _selColor = 0;
+
+function buildQSelect(selId){
+  const s = document.getElementById('fc-quarter');
+  s.innerHTML = '<option value="">（クォーターなし）</option>';
+  D.quarters.slice().sort(function(a,b){ return a.start.localeCompare(b.start); }).forEach(function(q){
+    const o = document.createElement('option'); o.value=q.id; o.textContent=q.name;
+    if(selId && q.id===selId) o.selected=true;
+    s.appendChild(o);
   });
-
-  function closeSheet(){ document.getElementById('cell-sheet').style.display='none'; }
-
-  // --- セルシート ---
-  function openCellSheet(d,p,ds,wk){
-    document.getElementById('cs-title').textContent=`${DAYS[d]}曜 ${PLBLS[p]}`;
-    document.getElementById('cs-class-btn').onclick=()=>{ closeSheet(); openClassForm(d,p,ds); };
-    document.getElementById('cs-memo-btn').onclick=()=>{ closeSheet(); openMemo(d,p,wk); };
-    document.getElementById('cell-sheet').style.display='flex';
-  }
-
-  // --- メモ ---
-  function openMemo(d,p,wk){
-    _memoDay=d; _memoPeriod=p; _memoWeek=wk;
-    const existing=D.memos.find(m=>m.week===wk&&m.day===d&&m.period===p);
-    document.getElementById('mmemo-title').textContent=`${DAYS[d]}曜 ${PLBLS[p]}`;
-    document.getElementById('fm-text').value=existing?existing.text:'';
-    const dw=document.getElementById('del-memo-wrap');
-    dw.style.display=existing?'block':'none';
-    const db=document.getElementById('del-memo-btn');
-    db.onclick=()=>{
-      D.memos=D.memos.filter(m=>!(m.week===wk&&m.day===d&&m.period===p));
-      dbSave(); closeModal('m-memo'); renderCal();
-    };
-    document.getElementById('m-memo').style.display='flex';
-  }
-  function saveMemo(){
-    const txt=document.getElementById('fm-text').value.trim();
-    if(!txt){alert('メモを入力してください');return;}
-    D.memos=D.memos.filter(m=>!(m.week===_memoWeek&&m.day===_memoDay&&m.period===_memoPeriod));
-    D.memos.push({week:_memoWeek,day:_memoDay,period:_memoPeriod,text:txt});
-    dbSave(); closeModal('m-memo'); renderCal();
-  }
-
-  // --- 色ピッカー ---
-  function buildColors(sel){
-    document.getElementById('color-row').innerHTML=COLORS.map((c,i)=>
-      `<div class="csw${i===sel?' on':''}" style="background:${c}" onclick="UI._pickColor(${i})"></div>`
-    ).join('');
-  }
-  function _pickColor(i){ _selColor=i; buildColors(i); }
-
-  // --- クォーターセレクト ---
-  function buildQSelect(selId){
-    const s=document.getElementById('fc-quarter');
-    s.innerHTML='<option value="">（クォーターなし）</option>';
-    [...D.quarters].sort((a,b)=>a.start.localeCompare(b.start)).forEach(q=>{
-      const o=document.createElement('option'); o.value=q.id; o.textContent=q.name;
-      if(selId&&q.id===selId) o.selected=true; s.appendChild(o);
+}
+function buildColorPicker(sel){
+  document.getElementById('color-row').innerHTML = CCOLORS.map(function(c,i){
+    return '<div class="csw'+(i===sel?' on':'')+'" data-ci="'+i+'" style="background:'+c+'"></div>';
+  }).join('');
+  document.getElementById('color-row').querySelectorAll('[data-ci]').forEach(function(el){
+    el.addEventListener('click', function(){
+      _selColor = parseInt(el.dataset.ci);
+      buildColorPicker(_selColor);
     });
+  });
+}
+function toggleSingle(){
+  const s = +document.getElementById('fc-single').value;
+  document.getElementById('fc-sdate-wrap').style.display = s?'block':'none';
+  document.getElementById('fc-reg-wrap').style.display   = s?'none':'block';
+}
+function openClassForm(day, period, ds){
+  _clsId = null; _selColor = 0;
+  document.getElementById('mclass-title').textContent = '時間割を追加';
+  ['fc-name','fc-code','fc-room','fc-teacher','fc-email','fc-office','fc-note'].forEach(function(id){ document.getElementById(id).value=''; });
+  document.getElementById('fc-day').value = day;
+  document.getElementById('fc-period').value = period;
+  document.getElementById('fc-single').value = '0';
+  document.getElementById('fc-sdate').value = ds||'';
+  toggleSingle();
+  const aqIds = ds ? qIdsFor(ds) : [];
+  buildQSelect(aqIds.length ? aqIds[0] : null);
+  buildColorPicker(0);
+  document.getElementById('fc-delete').style.display = 'none';
+  showModal('m-class');
+}
+function openEditClass(id){
+  const c = D.classes.find(function(x){ return x.id===id; }); if(!c) return;
+  _clsId = id; _selColor = c.colorIdx % 8;
+  document.getElementById('mclass-title').textContent = '時間割を編集';
+  document.getElementById('fc-name').value    = c.name;
+  document.getElementById('fc-code').value    = c.code||'';
+  document.getElementById('fc-day').value     = c.day;
+  document.getElementById('fc-period').value  = c.period;
+  document.getElementById('fc-room').value    = c.room||'';
+  document.getElementById('fc-teacher').value = c.teacher||'';
+  document.getElementById('fc-email').value   = c.email||'';
+  document.getElementById('fc-office').value  = c.office||'';
+  document.getElementById('fc-note').value    = c.note||'';
+  document.getElementById('fc-single').value  = c.isSingle?'1':'0';
+  document.getElementById('fc-sdate').value   = c.singleDate||'';
+  toggleSingle();
+  buildQSelect(c.quarterId||null);
+  buildColorPicker(_selColor);
+  document.getElementById('fc-delete').style.display = 'block';
+  showModal('m-class');
+}
+
+// ═══════════════════════════════════════════
+// DETAIL
+// ═══════════════════════════════════════════
+function openDetail(id){
+  const cls = D.classes.find(function(c){ return c.id===id; }); if(!cls) return;
+  const wk = weekKey(weekOffset);
+  const ec = D.scheds.find(function(s){ return s.week===wk&&s.origDay===cls.day&&s.origPeriod===cls.period; });
+  const q  = cls.quarterId ? D.quarters.find(function(x){ return x.id===cls.quarterId; }) : null;
+  const rid = repId(id);
+  const assigns = D.assignments.filter(function(a){ return a.classId===rid; });
+  const linkedCnt = cls.code ? D.classes.filter(function(c){ return c.code&&c.code.trim()===cls.code.trim(); }).length : 1;
+
+  const body = document.getElementById('detail-body');
+  body.innerHTML = '';
+
+  // タイトル
+  const h2 = document.createElement('h2'); h2.textContent = cls.name; body.appendChild(h2);
+  if(cls.code){
+    const bd = document.createElement('div'); bd.style.marginBottom='10px';
+    bd.innerHTML = '<span class="sbadge bq">'+cls.code+'</span>'
+      +(linkedCnt>1?'<span style="font-size:11px;color:var(--mut);margin-left:6px">課題を'+linkedCnt+'コマで共有</span>':'');
+    body.appendChild(bd);
+  }
+  if(q){ const bd=document.createElement('div');bd.style.marginBottom='10px';bd.innerHTML='<span class="sbadge bs">'+q.name+'</span>';body.appendChild(bd); }
+  if(cls.isSingle){ const bd=document.createElement('div');bd.style.marginBottom='10px';bd.innerHTML='<span class="sbadge be">単発 '+dfmt(cls.singleDate)+'</span>';body.appendChild(bd); }
+
+  // 警告
+  if(ec){
+    const wb=document.createElement('div');wb.className='warnbox';
+    const lbl=document.createElement('span');lbl.textContent='この週は'+(ec.type==='cancel'?'休講':'時限変更')+'が設定されています';
+    const rb=document.createElement('button');rb.textContent='削除';rb.style.cssText='background:none;border:none;color:var(--red);cursor:pointer;font-size:12px';
+    rb.addEventListener('click',function(){ D.scheds=D.scheds.filter(function(s){return s.id!==ec.id;}); dbSave(); hideModal('m-detail'); renderCal(); });
+    wb.appendChild(lbl); wb.appendChild(rb); body.appendChild(wb);
   }
 
-  // --- 時間割フォーム ---
-  function toggleSingle(){
-    const s=+document.getElementById('fc-single').value;
-    document.getElementById('fc-sdate-wrap').style.display=s?'block':'none';
-    document.getElementById('fc-reg-wrap').style.display=s?'none':'block';
+  // 詳細情報
+  function addInfo(lbl,val,isLink){
+    if(!val) return;
+    const d=document.createElement('div');d.className='dsec';
+    d.innerHTML='<div class="dlbl">'+lbl+'</div><div class="dval">'+(isLink?'<a href="mailto:'+val+'">'+val+'</a>':val)+'</div>';
+    body.appendChild(d);
   }
-  function openClassForm(day,period,ds){
-    _clsId=null; _selColor=0;
-    document.getElementById('mclass-title').textContent='時間割を追加';
-    ['fc-name','fc-code','fc-room','fc-teacher','fc-email','fc-office','fc-note'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('fc-day').value=day;
-    document.getElementById('fc-period').value=period;
-    document.getElementById('fc-single').value='0';
-    document.getElementById('fc-sdate').value=ds||'';
-    toggleSingle();
-    const aqIds=ds?qIdsFor(ds):[];
-    buildQSelect(aqIds.length?aqIds[0]:null);
-    buildColors(0);
-    document.getElementById('del-class-wrap').style.display='none';
-    document.getElementById('m-class').style.display='flex';
-  }
-  // 削除対象IDをグローバルに保持して確実に参照
-  let _delClsId=null;
+  addInfo('教室',cls.room); addInfo('担当教員',cls.teacher);
+  addInfo('メールアドレス',cls.email,true); addInfo('オフィス',cls.office);
+  if(cls.note){ const d=document.createElement('div');d.className='dsec';d.innerHTML='<div class="dlbl">メモ</div><div class="dval" style="color:var(--mut);font-size:13px">'+cls.note+'</div>';body.appendChild(d); }
 
-  function openEditClass(id){
-    const c=D.classes.find(x=>x.id===id); if(!c) return;
-    _clsId=id; _delClsId=id;
-    window._pendingDeleteClsId = id; // グローバルにセット
-    _selColor=c.colorIdx%8;
-    document.getElementById('mclass-title').textContent='時間割を編集';
-    document.getElementById('fc-name').value=c.name;
-    document.getElementById('fc-code').value=c.code||'';
-    document.getElementById('fc-day').value=c.day;
-    document.getElementById('fc-period').value=c.period;
-    document.getElementById('fc-room').value=c.room||'';
-    document.getElementById('fc-teacher').value=c.teacher||'';
-    document.getElementById('fc-email').value=c.email||'';
-    document.getElementById('fc-office').value=c.office||'';
-    document.getElementById('fc-note').value=c.note||'';
-    document.getElementById('fc-single').value=c.isSingle?'1':'0';
-    document.getElementById('fc-sdate').value=c.singleDate||'';
-    toggleSingle();
-    buildQSelect(c.quarterId||null);
-    buildColors(_selColor);
-    document.getElementById('del-class-wrap').style.display='none';
-    document.getElementById('m-class').style.display='flex';
+  // 課題
+  const sh=document.createElement('div');sh.className='sec-hdr';
+  const sl=document.createElement('span');sl.textContent='課題 ('+assigns.filter(function(a){return!a.done;}).length+'件未完了)';
+  const ab=document.createElement('button');ab.className='add-sm';ab.textContent='+ 追加';
+  ab.addEventListener('click',function(){ hideModal('m-detail'); openAddAssignFor(rid); });
+  sh.appendChild(sl);sh.appendChild(ab);body.appendChild(sh);
+
+  if(!assigns.length){
+    const ep=document.createElement('p');ep.style.cssText='color:var(--mut);font-size:12px;text-align:center;padding:10px';ep.textContent='課題はありません';body.appendChild(ep);
+  } else {
+    const rows=document.createElement('div');rows.className='arows';
+    assigns.forEach(function(a){
+      const due=a.due?dueFmt(a.due):null;
+      const row=document.createElement('div');row.className='arow';
+      const chk=document.createElement('div');chk.className='arow-chk'+(a.done?' done':'');
+      const ri=document.createElement('div');ri.className='arow-i';
+      ri.innerHTML='<div class="arow-n'+(a.done?' done':'')+'">'+a.name+'</div>'+(due?'<div class="arow-d"><span class="adue '+due.cls+'">'+due.txt+'</span></div>':'');
+      const db=document.createElement('button');db.style.cssText='background:none;border:none;color:var(--red);cursor:pointer;font-size:13px;padding:2px 4px';db.textContent='削除';
+      row.appendChild(chk);row.appendChild(ri);row.appendChild(db);
+      chk.addEventListener('click',function(){ toggleAssignInDetail(a.id,id); });
+      db.addEventListener('click',function(){ deleteAssignInDetail(a.id,id); });
+      rows.appendChild(row);
+    });
+    body.appendChild(rows);
   }
 
-  function _doDeleteClass(){
-    if(!_delClsId){ alert('削除対象が見つかりません'); return; }
+  // ボタン行
+  const br=document.createElement('div');br.className='btn-row';br.style.marginTop='14px';
+  const cb=document.createElement('button');cb.className='btn btn-s';cb.textContent='閉じる';cb.addEventListener('click',function(){hideModal('m-detail');});
+  br.appendChild(cb);
+  if(!cls.isSingle){
+    const sb=document.createElement('button');sb.className='btn btn-s';sb.textContent='変更';
+    sb.addEventListener('click',function(){ hideModal('m-detail'); openSched(id); });
+    br.appendChild(sb);
+  }
+  const eb=document.createElement('button');eb.className='btn btn-p';eb.textContent='編集';
+  eb.addEventListener('click',function(){ hideModal('m-detail'); openEditClass(id); });
+  br.appendChild(eb);
+  body.appendChild(br);
+
+  // 削除ボタン
+  const dw=document.createElement('div');dw.style.marginTop='8px';
+  const db=document.createElement('button');db.className='btn btn-d';db.textContent='この時間割を削除';
+  db.addEventListener('click',function(){
     if(!confirm('この時間割を削除しますか？')) return;
-    D.classes=D.classes.filter(x=>x.id!==_delClsId);
-    D.assignments.forEach(a=>{ if(a.classId===_delClsId) a.classId=null; });
-    _delClsId=null; _clsId=null;
-    dbSave();
-    document.getElementById('m-class').style.display='none';
-    renderCal();
-  }
-  function saveClass(){
+    D.classes = D.classes.filter(function(x){ return x.id!==id; });
+    D.assignments.forEach(function(a){ if(a.classId===id) a.classId=null; });
+    dbSave(); hideModal('m-detail'); renderCal();
+  });
+  dw.appendChild(db); body.appendChild(dw);
+
+  showModal('m-detail');
+}
+
+// ═══════════════════════════════════════════
+// SCHED
+// ═══════════════════════════════════════════
+let _schedClsId = null;
+function openSched(classId){
+  _schedClsId = classId;
+  const cls = D.classes.find(function(c){ return c.id===classId; });
+  document.getElementById('msched-title').textContent = cls.name+' の変更';
+  document.getElementById('fs-type').value = 'cancel';
+  document.getElementById('fs-note').value = '';
+  document.getElementById('fs-day').value = cls.day;
+  document.getElementById('fs-period').value = cls.period;
+  document.getElementById('fs-move').style.display = 'none';
+  showModal('m-sched');
+}
+
+// ═══════════════════════════════════════════
+// ASSIGN
+// ═══════════════════════════════════════════
+let _assignId = null;
+function buildAssignSelect(selId){
+  const s = document.getElementById('fa-class');
+  s.innerHTML = '<option value="">（時間割なし）</option>';
+  const seen = new Set();
+  D.classes.forEach(function(c){
+    const rid = repId(c.id);
+    if(seen.has(rid)) return;
+    seen.add(rid);
+    const rc = D.classes.find(function(x){ return x.id===rid; });
+    const o = document.createElement('option'); o.value=rid;
+    const q = rc.quarterId ? D.quarters.find(function(x){ return x.id===rc.quarterId; }) : null;
+    o.textContent = rc.name + (rc.code ? ' (' + rc.code + ')' : '') + (q ? ' [' + q.name + ']' : '');
+    if(selId && selId===rid) o.selected=true;
+    s.appendChild(o);
+  });
+}
+function openAddAssign(){
+  _assignId=null;
+  document.getElementById('massign-title').textContent='課題を追加';
+  buildAssignSelect(null);
+  ['fa-name','fa-due','fa-note'].forEach(function(id){ document.getElementById(id).value=''; });
+  document.getElementById('fa-delete').style.display='none';
+  showModal('m-assign');
+}
+function openAddAssignFor(rid){
+  _assignId=null;
+  document.getElementById('massign-title').textContent='課題を追加';
+  buildAssignSelect(rid);
+  ['fa-name','fa-due','fa-note'].forEach(function(id){ document.getElementById(id).value=''; });
+  document.getElementById('fa-delete').style.display='none';
+  showModal('m-assign');
+}
+function openEditAssign(id){
+  const a = D.assignments.find(function(x){ return x.id===id; }); if(!a) return;
+  _assignId=id;
+  document.getElementById('massign-title').textContent='課題を編集';
+  buildAssignSelect(a.classId);
+  document.getElementById('fa-name').value = a.name;
+  document.getElementById('fa-due').value  = a.due||'';
+  document.getElementById('fa-note').value = a.note||'';
+  document.getElementById('fa-delete').style.display='block';
+  showModal('m-assign');
+}
+function toggleAssign(id){
+  const a=D.assignments.find(function(x){ return x.id===id; }); if(a) a.done=!a.done;
+  dbSave(); renderAssigns(); renderCal();
+}
+function toggleAssignInDetail(id, clsId){
+  const a=D.assignments.find(function(x){ return x.id===id; }); if(a) a.done=!a.done;
+  dbSave(); hideModal('m-detail'); openDetail(clsId);
+}
+function deleteAssign(id){
+  if(!confirm('課題を削除しますか？')) return;
+  D.assignments=D.assignments.filter(function(x){ return x.id!==id; });
+  dbSave(); renderAssigns();
+}
+function deleteAssignInDetail(id, clsId){
+  if(!confirm('課題を削除しますか？')) return;
+  D.assignments=D.assignments.filter(function(x){ return x.id!==id; });
+  dbSave(); hideModal('m-detail'); openDetail(clsId);
+}
+function openADetail(id){
+  const a=D.assignments.find(function(x){ return x.id===id; }); if(!a) return;
+  const cls=a.classId?D.classes.find(function(c){ return c.id===a.classId; }):null;
+  const due=a.due?dueFmt(a.due):null;
+  let html='<h2>'+a.name+'</h2>';
+      if(cls) html+='<div class="dsec"><div class="dlbl">時間割</div><div class="dval">'+cls.name+(cls.code?' ('+cls.code+')':'')+'</div></div>';
+  if(due) html+='<div class="dsec"><div class="dlbl">期限</div><div class="dval"><span class="adue '+due.cls+'">'+due.txt+'</span></div></div>';
+  if(a.note) html+='<div class="dsec"><div class="dlbl">メモ</div><div class="dval" style="font-size:13px;color:var(--mut);white-space:pre-wrap">'+a.note+'</div></div>';
+  const body=document.getElementById('adetail-body'); body.innerHTML=html;
+  const br=document.createElement('div');br.className='btn-row';
+  const cb=document.createElement('button');cb.className='btn btn-s';cb.textContent='閉じる';cb.addEventListener('click',function(){hideModal('m-adetail');});
+  const eb=document.createElement('button');eb.className='btn btn-p';eb.textContent='編集';
+  eb.addEventListener('click',function(){ hideModal('m-adetail'); openEditAssign(a.id); });
+  br.appendChild(cb);br.appendChild(eb);body.appendChild(br);
+  showModal('m-adetail');
+}
+
+// ═══════════════════════════════════════════
+// PERIOD / QUARTER / EVENT
+// ═══════════════════════════════════════════
+let _periodId=null, _quarterId=null, _eventId=null;
+
+function openPeriod(id){
+  _periodId = id||null;
+  const p = id ? D.periods.find(function(x){ return x.id===id; }) : null;
+  document.getElementById('mperiod-title').textContent = p?'学期・休業期間を編集':'学期・休業期間を追加';
+  document.getElementById('fp-name').value  = p?p.name:'';
+  document.getElementById('fp-type').value  = p?p.type:'semester';
+  document.getElementById('fp-start').value = p?p.start:'';
+  document.getElementById('fp-end').value   = p?p.end:'';
+  document.getElementById('fp-delete').style.display = p?'block':'none';
+  showModal('m-period');
+}
+function openQuarter(id){
+  _quarterId = id||null;
+  const q = id ? D.quarters.find(function(x){ return x.id===id; }) : null;
+  document.getElementById('mquarter-title').textContent = q?'クォーターを編集':'クォーターを追加';
+  document.getElementById('fq-name').value  = q?q.name:'';
+  document.getElementById('fq-start').value = q?q.start:'';
+  document.getElementById('fq-end').value   = q?q.end:'';
+  document.getElementById('fq-delete').style.display = q?'block':'none';
+  showModal('m-quarter');
+}
+function openEvent(id){
+  _eventId = id||null;
+  const e = id ? D.events.find(function(x){ return x.id===id; }) : null;
+  document.getElementById('mevent-title').textContent = e?'行事を編集':'行事を追加';
+  document.getElementById('fe-name').value  = e?e.name:'';
+  document.getElementById('fe-start').value = e?e.start:'';
+  document.getElementById('fe-end').value   = e?e.end||'':'';
+  document.getElementById('fe-note').value  = e?e.note||'':'';
+  document.getElementById('fe-delete').style.display = e?'block':'none';
+  showModal('m-event');
+}
+
+// ═══════════════════════════════════════════
+// EVENT LISTENERS（全てaddEventListenerで登録）
+// ═══════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', function(){
+  // タブ
+  document.getElementById('tab-cal').addEventListener('click',     function(){ switchTab('cal'); });
+  document.getElementById('tab-assign').addEventListener('click',  function(){ switchTab('assign'); });
+  document.getElementById('tab-settings').addEventListener('click',function(){ switchTab('settings'); });
+
+  // 週ナビ
+  document.getElementById('btn-prev').addEventListener('click', function(){ weekOffset--; renderCal(); });
+  document.getElementById('btn-next').addEventListener('click', function(){ weekOffset++; renderCal(); });
+
+  // ヘッダー課題ボタン
+  document.getElementById('btn-add-assign').addEventListener('click', openAddAssign);
+
+  // セルシート
+  document.getElementById('cs-class-btn').addEventListener('click', function(){ hideSheet(); openClassForm(_sheetDay,_sheetPeriod,_sheetDs); });
+  document.getElementById('cs-memo-btn').addEventListener('click',  function(){ hideSheet(); openMemoForm(_sheetDay,_sheetPeriod,_sheetWk); });
+  document.getElementById('cs-cancel-btn').addEventListener('click', hideSheet);
+
+  // 時間割フォーム
+  document.getElementById('fc-single').addEventListener('change', toggleSingle);
+  document.getElementById('fc-cancel').addEventListener('click', function(){ hideModal('m-class'); });
+  document.getElementById('fc-save').addEventListener('click', function(){
     const name=document.getElementById('fc-name').value.trim(); if(!name){alert('時間割名を入力してください');return;}
     const isSingle=document.getElementById('fc-single').value==='1';
     const singleDate=document.getElementById('fc-sdate').value;
@@ -896,348 +1120,133 @@ const UI = (()=>{
     const period=+document.getElementById('fc-period').value;
     const qId=document.getElementById('fc-quarter').value||null;
     if(!isSingle){
-      const conflict=D.classes.find(c=>!c.isSingle&&c.day===day&&c.period===period&&c.id!==_clsId&&(c.quarterId||null)===qId);
-      if(conflict){alert(`${DAYS[day]}曜 ${period+1}限には「${conflict.name}」が既にあります`);return;}
+      const conflict=D.classes.find(function(c){ return !c.isSingle&&c.day===day&&c.period===period&&c.id!==_clsId&&(c.quarterId||null)===qId; });
+      if(conflict){alert(DAYS[day]+'曜 '+(period+1)+'限には「'+conflict.name+'」が既にあります');return;}
     }
     const data={name,code:document.getElementById('fc-code').value.trim(),day,period,isSingle,
       singleDate:isSingle?singleDate:null,quarterId:qId,
       room:document.getElementById('fc-room').value,teacher:document.getElementById('fc-teacher').value,
       email:document.getElementById('fc-email').value,office:document.getElementById('fc-office').value,
       note:document.getElementById('fc-note').value,colorIdx:_selColor};
-    if(_clsId) Object.assign(D.classes.find(c=>c.id===_clsId),data);
-    else D.classes.push({id:uid(),...data});
-    dbSave(); closeModal('m-class'); renderCal();
-  }
+    if(_clsId) Object.assign(D.classes.find(function(c){return c.id===_clsId;}),data);
+    else D.classes.push(Object.assign({id:uid()},data));
+    dbSave(); hideModal('m-class'); renderCal();
+  });
+  document.getElementById('fc-delete').addEventListener('click', function(){
+    if(!_clsId) return;
+    if(!confirm('この時間割を削除しますか？')) return;
+    D.classes=D.classes.filter(function(x){return x.id!==_clsId;});
+    D.assignments.forEach(function(a){if(a.classId===_clsId)a.classId=null;});
+    _clsId=null; dbSave(); hideModal('m-class'); renderCal();
+  });
 
-  // --- 授業詳細 ---
-  function openDetail(id){
-    const cls=D.classes.find(c=>c.id===id); if(!cls)return;
-    const wk=weekKey(weekOffset);
-    const ec=D.scheds.find(s=>s.week===wk&&s.origDay===cls.day&&s.origPeriod===cls.period);
-    const q=cls.quarterId?D.quarters.find(x=>x.id===cls.quarterId):null;
-    // 課題：代表IDで取得
-    const rid=repId(id);
-    const assigns=D.assignments.filter(a=>a.classId===rid);
-    const linkedCnt=D.classes.filter(c=>c.code&&c.code.trim()===cls.code?.trim()).length;
-    let html=`<h2>${cls.name}</h2>`;
-    if(cls.code) html+=`<div style="margin-bottom:10px"><span class="sbadge bq">${cls.code}</span>${linkedCnt>1?`<span style="font-size:11px;color:var(--mut);margin-left:6px">課題を${linkedCnt}コマで共有中</span>`:''}</div>`;
-    if(q) html+=`<div style="margin-bottom:10px"><span class="sbadge bs">${q.name}</span></div>`;
-    if(cls.isSingle) html+=`<div style="margin-bottom:10px"><span class="sbadge be">単発 ${dfmt(cls.singleDate)}</span></div>`;
-    if(ec) html+=`<div class="warnbox">この週は${ec.type==='cancel'?'休講':'時限変更'}が設定されています<button onclick="UI._rmSched('${ec.id}')" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:12px">削除</button></div>`;
-    if(cls.room)    html+=`<div class="dsec"><div class="dlbl">教室</div><div class="dval">${cls.room}</div></div>`;
-    if(cls.teacher) html+=`<div class="dsec"><div class="dlbl">担当教員</div><div class="dval">${cls.teacher}</div></div>`;
-    if(cls.email)   html+=`<div class="dsec"><div class="dlbl">メールアドレス</div><div class="dval"><a href="mailto:${cls.email}">${cls.email}</a></div></div>`;
-    if(cls.office)  html+=`<div class="dsec"><div class="dlbl">オフィス</div><div class="dval">${cls.office}</div></div>`;
-    if(cls.note)    html+=`<div class="dsec"><div class="dlbl">メモ</div><div class="dval" style="color:var(--mut);font-size:13px">${cls.note}</div></div>`;
-    html+=`<div class="sec-hdr"><span>課題 (${assigns.filter(a=>!a.done).length}件未完了)</span><button class="add-sm" onclick="UI.openAddAssignFor('${rid}')">+ 追加</button></div>`;
-    if(!assigns.length) html+=`<p style="color:var(--mut);font-size:12px;text-align:center;padding:10px">課題はありません</p>`;
-    else{
-      html+=`<div class="arows">`;
-      assigns.forEach(a=>{
-        const due=a.due?dueFmt(a.due):null;
-        html+=`<div class="arow">
-          <div class="arow-chk${a.done?' done':''}" onclick="UI.toggleAssign('${a.id}',true,'${id}')"></div>
-          <div class="arow-i">
-            <div class="arow-n${a.done?' done':''}">${a.name}</div>
-            ${due?`<div class="arow-d"><span class="adue ${due.cls}">${due.txt}</span></div>`:''}
-          </div>
-          <button onclick="UI.deleteAssign('${a.id}',true,'${id}')" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:13px;padding:2px 4px">削除</button>
-        </div>`;
-      });
-      html+=`</div>`;
-    }
-    const body = document.getElementById('detail-body');
-    body.innerHTML = html;
+  // 課題フォーム
+  document.getElementById('fa-cancel').addEventListener('click', function(){ hideModal('m-assign'); });
+  document.getElementById('fa-save').addEventListener('click', function(){
+    const name=document.getElementById('fa-name').value.trim(); if(!name){alert('課題名を入力してください');return;}
+    const classId=document.getElementById('fa-class').value||null;
+    const data={name,classId,due:document.getElementById('fa-due').value,note:document.getElementById('fa-note').value};
+    if(_assignId) Object.assign(D.assignments.find(function(x){return x.id===_assignId;}),data);
+    else D.assignments.push(Object.assign({id:uid(),done:false},data));
+    dbSave(); hideModal('m-assign'); renderAssigns();
+  });
+  document.getElementById('fa-delete').addEventListener('click', function(){
+    if(!_assignId) return;
+    if(!confirm('課題を削除しますか？')) return;
+    D.assignments=D.assignments.filter(function(x){return x.id!==_assignId;});
+    _assignId=null; dbSave(); hideModal('m-assign'); renderAssigns();
+  });
 
-    // btn-rowをDOMで生成
-    const actDiv = document.createElement('div');
-    actDiv.className = 'btn-row';
-    actDiv.style.marginTop = '14px';
-
-    const closeBtn = document.createElement('button');
-    closeBtn.className = 'btn btn-s';
-    closeBtn.textContent = '閉じる';
-    closeBtn.addEventListener('click', function(){ UI.closeModal('m-detail'); });
-    actDiv.appendChild(closeBtn);
-
-    if(!cls.isSingle){
-      const schedBtn = document.createElement('button');
-      schedBtn.className = 'btn btn-s';
-      schedBtn.textContent = '変更';
-      schedBtn.addEventListener('click', function(){ UI.closeModal('m-detail'); UI.openSched(id); });
-      actDiv.appendChild(schedBtn);
-    }
-
-    const editBtn = document.createElement('button');
-    editBtn.className = 'btn btn-p';
-    editBtn.textContent = '編集';
-    editBtn.addEventListener('click', function(){ UI.closeModal('m-detail'); UI.openEditClass(id); });
-    actDiv.appendChild(editBtn);
-
-    body.appendChild(actDiv);
-
-    const delWrap = document.createElement('div');
-    delWrap.style.marginTop = '8px';
-    const delBtn = document.createElement('button');
-    delBtn.className = 'btn btn-d';
-    delBtn.textContent = 'この時間割を削除';
-    delBtn.addEventListener('click', function(){
-      if(!confirm('この時間割を削除しますか？')) return;
-      D.classes = D.classes.filter(function(x){ return x.id !== id; });
-      D.assignments = D.assignments.map(function(a){
-        return a.classId === id ? Object.assign({}, a, {classId: null}) : a;
-      });
-      localStorage.setItem(DB_KEY, JSON.stringify(D));
-      document.getElementById('m-detail').style.display = 'none';
-      renderCal();
-    });
-    delWrap.appendChild(delBtn);
-    body.appendChild(delWrap);
-
-    document.getElementById('m-detail').style.display='flex';
-  }
-  function _rmSched(id){
-    D.scheds=D.scheds.filter(s=>s.id!==id);
-    dbSave(); closeModal('m-detail'); renderCal();
-  }
-
-  // --- スケジュール変更 ---
-  function openSched(classId){
-    _schedId=classId;
-    const cls=D.classes.find(c=>c.id===classId);
-    document.getElementById('msched-title').textContent=cls.name+' の変更';
-    document.getElementById('fs-type').value='cancel';
-    document.getElementById('fs-note').value='';
-    document.getElementById('fs-day').value=cls.day;
-    document.getElementById('fs-period').value=cls.period;
-    toggleSched();
-    document.getElementById('m-sched').style.display='flex';
-  }
-  function toggleSched(){ document.getElementById('fs-move').style.display=document.getElementById('fs-type').value==='move'?'block':'none'; }
-  function saveSched(){
-    const cls=D.classes.find(c=>c.id===_schedId);
+  // スケジュールフォーム
+  document.getElementById('fs-type').addEventListener('change', function(){
+    document.getElementById('fs-move').style.display=this.value==='move'?'block':'none';
+  });
+  document.getElementById('fs-cancel').addEventListener('click', function(){ hideModal('m-sched'); });
+  document.getElementById('fs-save').addEventListener('click', function(){
+    const cls=D.classes.find(function(c){return c.id===_schedClsId;});
     const type=document.getElementById('fs-type').value;
     const wk=weekKey(weekOffset);
     const entry={id:uid(),week:wk,type,origDay:cls.day,origPeriod:cls.period,note:document.getElementById('fs-note').value};
     if(type==='move'){entry.newDay=+document.getElementById('fs-day').value;entry.newPeriod=+document.getElementById('fs-period').value;}
-    D.scheds.push(entry); dbSave(); closeModal('m-sched'); renderCal();
-  }
+    D.scheds.push(entry); dbSave(); hideModal('m-sched'); renderCal();
+  });
 
-  // --- 課題 ---
-  function buildAssignSelect(selId){
-    const s=document.getElementById('fa-class');
-    s.innerHTML='<option value="">（時間割なし）</option>';
-    // 代表IDのみを表示（重複グループは1つにまとめる）
-    const seen=new Set();
-    D.classes.forEach(c=>{
-      const rid=repId(c.id);
-      if(seen.has(rid)) return;
-      seen.add(rid);
-      const rc=D.classes.find(x=>x.id===rid);
-      const o=document.createElement('option'); o.value=rid;
-      const q=rc.quarterId?D.quarters.find(x=>x.id===rc.quarterId):null;
-      o.textContent=rc.name+(rc.code?` (${rc.code})`:'')+(q?` [${q.name}]`:'');
-      if(selId&&selId===rid) o.selected=true;
-      s.appendChild(o);
-    });
-  }
-  function openAddAssign(){
-    _assignId=null;
-    document.getElementById('massign-title').textContent='課題を追加';
-    buildAssignSelect(null);
-    ['fa-name','fa-due','fa-note'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('del-assign-wrap').style.display='none';
-    document.getElementById('m-assign').style.display='flex';
-  }
-  function openAddAssignFor(rid){
-    closeModal('m-detail');
-    _assignId=null;
-    document.getElementById('massign-title').textContent='課題を追加';
-    buildAssignSelect(rid);
-    ['fa-name','fa-due','fa-note'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('del-assign-wrap').style.display='none';
-    document.getElementById('m-assign').style.display='flex';
-  }
-  function openEditAssign(id){
-    const a=D.assignments.find(x=>x.id===id); if(!a)return;
-    _assignId=id;
-    window._pendingDeleteAssignId = id; // グローバルにセット
-    document.getElementById('massign-title').textContent='課題を編集';
-    buildAssignSelect(a.classId);
-    document.getElementById('fa-name').value=a.name;
-    document.getElementById('fa-due').value=a.due||'';
-    document.getElementById('fa-note').value=a.note||'';
-    const dw=document.getElementById('del-assign-wrap'); dw.style.display='block';
-    const oldBtn=document.getElementById('del-assign-btn');
-    const newBtn=oldBtn.cloneNode(true);
-    newBtn.addEventListener('click',()=>{
-      if(!confirm('課題を削除しますか？')) return;
-      D.assignments=D.assignments.filter(x=>x.id!==id);
-      dbSave(); document.getElementById('m-assign').style.display='none'; renderAssigns();
-    });
-    dw.replaceChild(newBtn,oldBtn);
-    document.getElementById('m-assign').style.display='flex';
-  }
-  function saveAssign(){
-    const name=document.getElementById('fa-name').value.trim(); if(!name){alert('課題名を入力してください');return;}
-    const classId=document.getElementById('fa-class').value||null;
-    const data={name,classId,due:document.getElementById('fa-due').value,note:document.getElementById('fa-note').value};
-    if(_assignId) Object.assign(D.assignments.find(x=>x.id===_assignId),data);
-    else D.assignments.push({id:uid(),...data,done:false});
-    dbSave(); closeModal('m-assign'); renderAssigns();
-  }
-  function toggleAssign(id, fromDetail=false, clsId=null){
-    const a=D.assignments.find(x=>x.id===id); if(a) a.done=!a.done;
-    dbSave();
-    if(fromDetail&&clsId) openDetail(clsId);
-    else{ renderAssigns(); renderCal(); }
-  }
-  function deleteAssign(id, fromDetail=false, clsId=null){
-    D.assignments=D.assignments.filter(x=>x.id!==id);
-    dbSave();
-    if(fromDetail&&clsId) openDetail(clsId);
-    else renderAssigns();
-  }
+  // メモフォーム
+  document.getElementById('fm-cancel').addEventListener('click', function(){ hideModal('m-memo'); });
+  document.getElementById('fm-save').addEventListener('click', function(){
+    const txt=document.getElementById('fm-text').value.trim(); if(!txt){alert('メモを入力してください');return;}
+    D.memos=D.memos.filter(function(m){return!(m.week===_memoWk&&m.day===_memoDay&&m.period===_memoPeriod);});
+    D.memos.push({week:_memoWk,day:_memoDay,period:_memoPeriod,text:txt});
+    dbSave(); hideModal('m-memo'); renderCal();
+  });
+  document.getElementById('fm-delete').addEventListener('click', function(){
+    D.memos=D.memos.filter(function(m){return!(m.week===_memoWk&&m.day===_memoDay&&m.period===_memoPeriod);});
+    dbSave(); hideModal('m-memo'); renderCal();
+  });
 
-  // --- 課題詳細 ---
-  function openADetail(id){
-    const a=D.assignments.find(x=>x.id===id); if(!a)return;
-    const cls=a.classId?D.classes.find(c=>c.id===a.classId):null;
-    const due=a.due?dueFmt(a.due):null;
-    let html=`<h2>${a.name}</h2>`;
-    if(cls) html+=`<div class="dsec"><div class="dlbl">時間割</div><div class="dval">${cls.name}${cls.code?` (${cls.code})`:''}</div></div>`;
-    if(due) html+=`<div class="dsec"><div class="dlbl">期限</div><div class="dval"><span class="adue ${due.cls}">${due.txt}</span></div></div>`;
-    if(a.note) html+=`<div class="dsec"><div class="dlbl">メモ</div><div class="dval" style="font-size:13px;color:var(--mut);white-space:pre-wrap">${a.note}</div></div>`;
-    html+=`<div class="btn-row">
-      <button class="btn btn-s" onclick="UI.closeModal('m-adetail')">閉じる</button>
-      <button class="btn btn-p" onclick="UI.closeModal('m-adetail');UI.openEditAssign('${a.id}')">編集</button>
-    </div>`;
-    document.getElementById('adetail-body').innerHTML=html;
-    document.getElementById('m-adetail').style.display='flex';
-  }
+  // 設定ボタン
+  document.getElementById('btn-add-period').addEventListener('click',  function(){ openPeriod(null); });
+  document.getElementById('btn-add-quarter').addEventListener('click', function(){ openQuarter(null); });
+  document.getElementById('btn-add-event').addEventListener('click',   function(){ openEvent(null); });
 
-  // --- 学期 ---
-  function openPeriod(id){
-    const p=id?D.periods.find(x=>x.id===id):null;
-    document.getElementById('mperiod-title').textContent=p?'学期・休業期間を編集':'学期・休業期間を追加';
-    document.getElementById('fp-name').value=p?p.name:'';
-    document.getElementById('fp-type').value=p?p.type:'semester';
-    document.getElementById('fp-start').value=p?p.start:'';
-    document.getElementById('fp-end').value=p?p.end:'';
-    const dw=document.getElementById('del-period-wrap'); dw.style.display=p?'block':'none';
-    if(p){
-      const oldBtn=document.getElementById('del-period-btn');
-      const newBtn=oldBtn.cloneNode(true);
-      newBtn.addEventListener('click',()=>{ D.periods=D.periods.filter(x=>x.id!==id); dbSave(); closeModal('m-period'); renderSettings(); renderCal(); });
-      dw.replaceChild(newBtn,oldBtn);
-    }
-    document.getElementById('m-period').style.display='flex';
-  }
-  function savePeriod(){
+  // 学期フォーム
+  document.getElementById('fp-cancel').addEventListener('click', function(){ hideModal('m-period'); });
+  document.getElementById('fp-save').addEventListener('click', function(){
     const name=document.getElementById('fp-name').value.trim(),start=document.getElementById('fp-start').value,end=document.getElementById('fp-end').value;
     if(!name||!start||!end){alert('名称・開始日・終了日を入力してください');return;}
     const data={name,type:document.getElementById('fp-type').value,start,end};
-    const ex=D.periods.find(x=>x.id&&document.getElementById('fp-name').value); // find by current editing
-    // シンプルに：編集中idがあれば更新、なければ追加
-    const editing=D.periods.find(x=>x.name===data.name&&x.start===data.start); // fallback
-    if(editing) Object.assign(editing,data); else D.periods.push({id:uid(),...data});
-    dbSave(); closeModal('m-period'); renderSettings(); renderCal();
-  }
+    if(_periodId){ Object.assign(D.periods.find(function(x){return x.id===_periodId;}),data); }
+    else{ D.periods.push(Object.assign({id:uid()},data)); }
+    dbSave(); hideModal('m-period'); renderSettings(); renderCal();
+  });
+  document.getElementById('fp-delete').addEventListener('click', function(){
+    if(!_periodId) return;
+    if(!confirm('削除しますか？')) return;
+    D.periods=D.periods.filter(function(x){return x.id!==_periodId;});
+    _periodId=null; dbSave(); hideModal('m-period'); renderSettings(); renderCal();
+  });
 
-  // --- クォーター ---
-  function openQuarter(id){
-    const q=id?D.quarters.find(x=>x.id===id):null;
-    document.getElementById('mquarter-title').textContent=q?'クォーターを編集':'クォーターを追加';
-    document.getElementById('fq-name').value=q?q.name:'';
-    document.getElementById('fq-start').value=q?q.start:'';
-    document.getElementById('fq-end').value=q?q.end:'';
-    const dw=document.getElementById('del-quarter-wrap'); dw.style.display=q?'block':'none';
-    if(q){
-      const oldBtn=document.getElementById('del-quarter-btn');
-      const newBtn=oldBtn.cloneNode(true);
-      newBtn.addEventListener('click',()=>{ D.quarters=D.quarters.filter(x=>x.id!==id); dbSave(); closeModal('m-quarter'); renderSettings(); renderCal(); });
-      dw.replaceChild(newBtn,oldBtn);
-    }
-    document.getElementById('m-quarter').style.display='flex';
-  }
-  function saveQuarter(){
+  // クォーターフォーム
+  document.getElementById('fq-cancel').addEventListener('click', function(){ hideModal('m-quarter'); });
+  document.getElementById('fq-save').addEventListener('click', function(){
     const name=document.getElementById('fq-name').value.trim(),start=document.getElementById('fq-start').value,end=document.getElementById('fq-end').value;
     if(!name||!start||!end){alert('名称・開始日・終了日を入力してください');return;}
-    const q=D.quarters.find(x=>x.name===name&&x.start===start);
-    if(q) Object.assign(q,{name,start,end}); else D.quarters.push({id:uid(),name,start,end});
-    dbSave(); closeModal('m-quarter'); renderSettings(); renderCal();
-  }
+    if(_quarterId){ Object.assign(D.quarters.find(function(x){return x.id===_quarterId;}),{name,start,end}); }
+    else{ D.quarters.push({id:uid(),name,start,end}); }
+    dbSave(); hideModal('m-quarter'); renderSettings(); renderCal();
+  });
+  document.getElementById('fq-delete').addEventListener('click', function(){
+    if(!_quarterId) return;
+    if(!confirm('削除しますか？')) return;
+    D.quarters=D.quarters.filter(function(x){return x.id!==_quarterId;});
+    _quarterId=null; dbSave(); hideModal('m-quarter'); renderSettings(); renderCal();
+  });
 
-  // --- 行事 ---
-  function openEvent(id){
-    const ev=id?D.events.find(x=>x.id===id):null;
-    document.getElementById('mevent-title').textContent=ev?'行事を編集':'行事を追加';
-    document.getElementById('fe-name').value=ev?ev.name:'';
-    document.getElementById('fe-start').value=ev?ev.start:'';
-    document.getElementById('fe-end').value=ev?ev.end||'':'';
-    document.getElementById('fe-note').value=ev?ev.note||'':'';
-    const dw=document.getElementById('del-event-wrap'); dw.style.display=ev?'block':'none';
-    if(ev){
-      const oldBtn=document.getElementById('del-event-btn');
-      const newBtn=oldBtn.cloneNode(true);
-      newBtn.addEventListener('click',()=>{ D.events=D.events.filter(x=>x.id!==id); dbSave(); closeModal('m-event'); renderSettings(); renderCal(); });
-      dw.replaceChild(newBtn,oldBtn);
-    }
-    document.getElementById('m-event').style.display='flex';
-  }
-  function saveEvent(){
+  // 行事フォーム
+  document.getElementById('fe-cancel').addEventListener('click', function(){ hideModal('m-event'); });
+  document.getElementById('fe-save').addEventListener('click', function(){
     const name=document.getElementById('fe-name').value.trim(),start=document.getElementById('fe-start').value;
     if(!name||!start){alert('行事名・開始日を入力してください');return;}
     const end=document.getElementById('fe-end').value||start;
     const data={name,start,end,note:document.getElementById('fe-note').value};
-    const ev=D.events.find(x=>x.name===name&&x.start===start);
-    if(ev) Object.assign(ev,data); else D.events.push({id:uid(),...data});
-    dbSave(); closeModal('m-event'); renderSettings(); renderCal();
-  }
-
-  return {
-    tab, weekShift, closeModal, closeSheet,
-    openCellSheet, openMemo, saveMemo,
-    toggleSingle, _pickColor,
-    openEditClass, saveClass, _doDeleteClass,
-    openDetail, _rmSched,
-    openSched, toggleSched, saveSched,
-    openAddAssign, openAddAssignFor, openEditAssign, saveAssign,
-    toggleAssign, deleteAssign, openADetail,
-    openPeriod, savePeriod,
-    openQuarter, saveQuarter,
-    openEvent, saveEvent,
-  };
-})();
-
-// UIの外にグローバル関数として定義（HTML onclick属性から確実に呼べる）
-function doDeleteClass(id){
-  if(!confirm('この時間割を削除しますか？')) return;
-  const before = D.classes.length;
-  const ids = D.classes.map(function(x){ return x.id; }).join('\n');
-  alert('受け取ったID:\n' + id + '\n\n登録済みID一覧:\n' + ids);
-  D.classes = D.classes.filter(function(x){ return x.id !== id; });
-  D.assignments = D.assignments.map(function(a){
-    return a.classId === id ? Object.assign({}, a, {classId: null}) : a;
+    if(_eventId){ Object.assign(D.events.find(function(x){return x.id===_eventId;}),data); }
+    else{ D.events.push(Object.assign({id:uid()},data)); }
+    dbSave(); hideModal('m-event'); renderSettings(); renderCal();
   });
-  try { localStorage.setItem(DB_KEY, JSON.stringify(D)); } catch(e){ alert('保存エラー: '+e); return; }
-  document.getElementById('m-detail').style.display = 'none';
-  document.getElementById('m-class').style.display = 'none';
+  document.getElementById('fe-delete').addEventListener('click', function(){
+    if(!_eventId) return;
+    if(!confirm('削除しますか？')) return;
+    D.events=D.events.filter(function(x){return x.id!==_eventId;});
+    _eventId=null; dbSave(); hideModal('m-event'); renderSettings(); renderCal();
+  });
+
+  window.addEventListener('resize', renderCal);
+
+  // 初期化
+  dbLoad();
+  applyTheme(D.theme||'minimal');
   renderCal();
-}
-function doDeleteAssign(){
-  const id = window._pendingDeleteAssignId;
-  if(!id) return;
-  if(!confirm('課題を削除しますか？')) return;
-  D.assignments = D.assignments.filter(x => x.id !== id);
-  window._pendingDeleteAssignId = null;
-  dbSave();
-  document.getElementById('m-assign').style.display = 'none';
-  renderAssigns();
-}
-dbLoad();
-applyTheme(D.theme||'minimal');
-renderCal();
+});
 </script>
 </body>
 </html>
